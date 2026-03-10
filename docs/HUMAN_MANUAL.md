@@ -15,6 +15,11 @@
 - adoption plan の叩き台
 - block / chunk / ticket の更新
 
+## mdBook 未導入時の扱い
+- `BLK-002` 着手時に `mdbook --version` が通らなければ、まず導入前提の整理を優先する
+- この project では、初回は `mdbook init`, `mdbook build`, `mdbook serve --open` を理解できれば十分とする
+- 導入できなかった場合でも、その事実とエラー内容を `fact-report` へ残して次 ticket に渡す
+
 ## migration 時の確認ポイント
 - 現行 AI が `MIGRATION_START_HERE.md` を起点に作業しているか
 - `docs/migration/project-inventory.md` が埋まっているか
