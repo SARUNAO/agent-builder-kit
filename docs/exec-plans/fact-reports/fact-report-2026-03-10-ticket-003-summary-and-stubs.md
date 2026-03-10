@@ -7,7 +7,7 @@
 ## 変更したファイル
 - `src/SUMMARY.md`
 - `src/overview.md`
-- `src/environment-check.md`
+- `src/plan-manager-skeleton.md`
 - `src/role-flow.md`
 - `src/first-change.md`
 - `docs/exec-plans/tickets/ticket-2026-03-10-003-summary-and-stubs.md`
@@ -15,7 +15,7 @@
 ## 実行したコマンド
 - `find src -maxdepth 2 -type f | sort`
 - `sed -n '1,200p' src/SUMMARY.md`
-- `test -f src/overview.md && test -f src/environment-check.md && test -f src/role-flow.md && test -f src/first-change.md`
+- `test -f src/overview.md && test -f src/plan-manager-skeleton.md && test -f src/role-flow.md && test -f src/first-change.md`
 
 ## 結果
 - `src/SUMMARY.md` を 4 章構成へ更新した

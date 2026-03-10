@@ -77,7 +77,7 @@ kind: ticket
 
 ## 実施結果
 - `src/SUMMARY.md` を 4 章構成へ更新した
-- `src/overview.md` を最小スタブとして残しつつ、`src/environment-check.md`, `src/role-flow.md`, `src/first-change.md` を追加した
+- `src/overview.md` を最小スタブとして残しつつ、`src/plan-manager-skeleton.md`, `src/role-flow.md`, `src/first-change.md` を追加した
 - 各章は BLK-003 で本文を膨らませやすいよう、見出しと短い案内に留めた
 - この ticket は markdown / docs 更新のみなので reviewer は docs-only skip とする
 

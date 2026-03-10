@@ -36,7 +36,8 @@ description: 上流の要求整理と計画更新を行う canonical skill。pro
 7. 大きな feedback、依存関係変更、途中差し込み後は block 順序の妥当性を再判定する。
 8. `chunk` / `block` の `done` 昇格は source docs sync を確認してから行う。
 9. block status を chunk / ticket の roll-up と論理整合させる。
-10. block 構造、順序、status が変わり canvas が有効なら最後に sync する。
+10. `task-planner` が roll-up 整合のため親 block を `pending -> in_progress` へ同期する例外を許容し、その後の `done` / `blocked` 判断は引き続き担当する。
+11. block 構造、順序、status が変わり canvas が有効なら最後に sync する。
 
 ## 聞き取りルール
 - 実装前提がまだ曖昧なら、block 実行を進める前に人間確認を優先する。

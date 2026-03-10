@@ -79,6 +79,7 @@
 9. 必要な `done` 昇格を反映する
 10. block 順序または status が変わったら `obsidian-canvas-sync` を実行する
 11. `docs/PRODUCT_SENSE.md`, `docs/DESIGN.md`, `docs/HUMAN_MANUAL.md` を変えた場合は、対応する `docs/references/*.md` の summary 追従要否も判断する
+12. `task-planner` が roll-up 整合のため親 block を `pending -> in_progress` へ同期した場合は、その状態を正として扱い、以後の `done` / `blocked` 判断を引き続き担当する
 
 ## `plan-manager` の聞き取りルール
 - block の実装着手前に、未確定の仕様を人間へ確認する
@@ -100,8 +101,10 @@
 4. ticket を `done` に上げる前に ticket / fact-report / chunk table の同期を確認する
 5. ticket 完了ごとに、追加の chunk / ticket / block が必要かを必ず再判定する
 6. 必要な ticket `done` 昇格と chunk handoff を反映する
-7. `obsidian-canvas-sync` を実行する
-8. `docs/exec-plans/active/attention-queue.md` を更新した場合は、`docs/references/attention-queue.md` の追従要否も判断する
+7. 配下 chunk を `in_progress` または `done` に上げた結果、親 block が roll-up 上 `in_progress` になるのに `pending` のままなら、親 block の `pending -> in_progress` も同期してよい
+8. この例外は整合同期に限り、block の goal / depends_on / 順序変更や `done` / `blocked` 判断は行わない
+9. `obsidian-canvas-sync` を実行する
+10. `docs/exec-plans/active/attention-queue.md` を更新した場合は、`docs/references/attention-queue.md` の追従要否も判断する
 
 ### `task-worker`
 1. 対象 ticket と関連 chunk を読む

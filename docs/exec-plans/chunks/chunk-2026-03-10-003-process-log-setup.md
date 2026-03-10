@@ -3,7 +3,7 @@ chunk_id: CHUNK-2026-03-10-003
 parent_plan: PLAN-2026-03-10-MDBOOK-WORKSHOP
 parent_block: BLK-007
 title: 一次記録の置き場と運用ルールを整える
-status: in_progress
+status: done
 owner_role: task_planner
 depends_on: CHUNK-2026-03-10-002
 lane_order: 300
@@ -15,7 +15,7 @@ kind: chunk
 - chunk_id: CHUNK-2026-03-10-003
 - parent_plan: PLAN-2026-03-10-MDBOOK-WORKSHOP
 - parent_block: BLK-007
-- status: in_progress
+- status: done
 - owner_role: task_planner
 - depends_on: CHUNK-2026-03-10-002
 - lane_order: 300
@@ -28,7 +28,7 @@ kind: chunk
 | ticket_id | title | owner | status | editable_paths | depends_on |
 |---|---|---|---|---|---|
 | TICKET-2026-03-10-005 | 一次記録 docs の置き場と index を作る | task_worker | done | `docs/exec-plans/active/index.md`, `docs/exec-plans/active/*.md` | TICKET-2026-03-10-004 |
-| TICKET-2026-03-10-006 | `fact-report` と記録ルールを揃える | task_worker | pending | `docs/templates/fact-report-template.md`, `README.md`, `docs/HUMAN_MANUAL.md` | TICKET-2026-03-10-005 |
+| TICKET-2026-03-10-006 | `fact-report` と記録ルールを揃える | task_worker | done | `docs/templates/fact-report-template.md`, `README.md`, `docs/HUMAN_MANUAL.md` | TICKET-2026-03-10-005 |
 
 ## 完了条件
 - 一次記録の置き場が repo 内で明示されている
@@ -36,10 +36,10 @@ kind: chunk
 - BLK-002 の完了物を BLK-007 が回収できる状態になっている
 
 ## Done チェック
-- [ ] 含まれる ticket がすべて `done`
-- [ ] chunk review の重大 findings が解消済み
-- [ ] docs / status 更新が完了している
-- [ ] `plan-owner` に done 昇格判断を渡せる状態になっている
+- [x] 含まれる ticket がすべて `done`
+- [x] chunk review の重大 findings が解消済み
+- [x] docs / status 更新が完了している
+- [x] `plan-owner` に done 昇格判断を渡せる状態になっている
 
 ## 並列化ルール
 - この chunk の ticket は直列実行とする
@@ -57,3 +57,4 @@ kind: chunk
 - 2026-03-10: BLK-007 の前半として、記録ストアと運用ルール整備を切り出した
 - 2026-03-10: TICKET-005 着手に合わせて、この chunk を `in_progress` に上げた
 - 2026-03-10: TICKET-005 を `done` に昇格し、`docs/exec-plans/active/` に一次記録のホームを作成した
+- 2026-03-10: TICKET-006 を `done` に昇格し、`fact-report` template と記録ルールを README / Human Manual に反映した

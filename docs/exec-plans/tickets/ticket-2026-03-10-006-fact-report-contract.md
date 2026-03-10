@@ -3,7 +3,7 @@ ticket_id: TICKET-2026-03-10-006
 parent_plan: PLAN-2026-03-10-MDBOOK-WORKSHOP
 parent_chunk: CHUNK-2026-03-10-003
 title: `fact-report` と記録ルールを揃える
-status: pending
+status: done
 owner_role: task_planner
 assignee_role: task_worker
 editable_paths:
@@ -20,7 +20,7 @@ kind: ticket
 - ticket_id: TICKET-2026-03-10-006
 - parent_plan: PLAN-2026-03-10-MDBOOK-WORKSHOP
 - parent_chunk: CHUNK-2026-03-10-003
-- status: pending
+- status: done
 - owner_role: task_planner
 - assignee_role: task_worker
 - lane_order: 200
@@ -60,10 +60,10 @@ kind: ticket
 - 後続 ticket が統一された粒度で一次記録を返せる
 
 ## Done チェック
-- [ ] Goal を満たす更新が入っている
-- [ ] Verification を実施して結果を残した
-- [ ] docs-only skip または reviewer sign-off の扱いを明記した
-- [ ] 未解決事項があれば `fact-report` に記録した
+- [x] Goal を満たす更新が入っている
+- [x] Verification を実施して結果を残した
+- [x] docs-only skip または reviewer sign-off の扱いを明記した
+- [x] 未解決事項があれば `fact-report` に記録した
 
 ## Auto Review
 - 使用する review skill: reviewer
@@ -73,3 +73,16 @@ kind: ticket
 - `fact-report`
 - 追加した記録項目の一覧
 - 運用上の懸念
+
+## 実施結果
+- `docs/templates/fact-report-template.md` に、`decision / gotcha / command / before-after` へ再利用しやすい欄と書き方の目安を追加した
+- `README.md` に BLK-007 以降の記録ルールを追記した
+- `docs/HUMAN_MANUAL.md` に、人間が確認すべき一次記録の粒度を追記した
+- この ticket は markdown / docs 更新のみなので reviewer は docs-only skip とする
+
+## Verification 結果
+- template を読むだけで、`結果` と `記録素材メモ` の使い分けが分かる状態にした
+- README と Human Manual に同じ記録ルールを短く反映した
+
+## Fact Report
+- `docs/exec-plans/fact-reports/fact-report-2026-03-10-ticket-006-fact-report-contract.md`

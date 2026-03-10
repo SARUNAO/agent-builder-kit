@@ -127,8 +127,8 @@
       "y": 888,
       "width": 420,
       "height": 368,
-      "text": "# [開発ログと記事素材の記録基盤を整える](docs/exec-plans/blocks/block-007-process-logging.md)\n`BLK-007`\nstatus: `in_progress`\n\n実際の開発作業を後から客観的に記事化できるよう、一次記録の置き場と記録ルールを固める",
-      "color": "#10B981"
+      "text": "# [開発ログと記事素材の記録基盤を整える](docs/exec-plans/blocks/block-007-process-logging.md)\n`BLK-007`\nstatus: `done`\n\n実際の開発作業を後から客観的に記事化できるよう、一次記録の置き場と記録ルールを固める",
+      "color": "#FFFFFF"
     },
     {
       "id": "flow:chunk:CHUNK-2026-03-10-003",
@@ -137,8 +137,8 @@
       "y": 888,
       "width": 420,
       "height": 160,
-      "text": "## [一次記録の置き場と運用ルールを整える](docs/exec-plans/chunks/chunk-2026-03-10-003-process-log-setup.md)\n`CHUNK-2026-03-10-003`\nstatus: `in_progress`\ntickets: `2`",
-      "color": "#10B981"
+      "text": "## [一次記録の置き場と運用ルールを整える](docs/exec-plans/chunks/chunk-2026-03-10-003-process-log-setup.md)\n`CHUNK-2026-03-10-003`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
     },
     {
       "id": "flow:ticket:TICKET-2026-03-10-005",
@@ -157,8 +157,8 @@
       "y": 888,
       "width": 280,
       "height": 160,
-      "text": "### [`fact-report` と記録ルールを揃える](docs/exec-plans/tickets/ticket-2026-03-10-006-fact-report-contract.md)\n`TICKET-2026-03-10-006`\nstatus: `pending`",
-      "color": "#000000"
+      "text": "### [`fact-report` と記録ルールを揃える](docs/exec-plans/tickets/ticket-2026-03-10-006-fact-report-contract.md)\n`TICKET-2026-03-10-006`\nstatus: `done`",
+      "color": "#FFFFFF"
     },
     {
       "id": "flow:chunk:CHUNK-2026-03-10-004",
@@ -167,8 +167,8 @@
       "y": 1096,
       "width": 420,
       "height": 160,
-      "text": "## [実例ログを記事素材へ変換する](docs/exec-plans/chunks/chunk-2026-03-10-004-article-source-mapping.md)\n`CHUNK-2026-03-10-004`\nstatus: `pending`\ntickets: `2`",
-      "color": "#000000"
+      "text": "## [実例ログを記事素材へ変換する](docs/exec-plans/chunks/chunk-2026-03-10-004-article-source-mapping.md)\n`CHUNK-2026-03-10-004`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
     },
     {
       "id": "flow:ticket:TICKET-2026-03-10-007",
@@ -177,8 +177,8 @@
       "y": 1096,
       "width": 280,
       "height": 160,
-      "text": "### [BLK-002 の実例を decision / gotcha / command / before-after に落とす](docs/exec-plans/tickets/ticket-2026-03-10-007-backfill-logs.md)\n`TICKET-2026-03-10-007`\nstatus: `pending`",
-      "color": "#000000"
+      "text": "### [BLK-002 の実例を decision / gotcha / command / before-after に落とす](docs/exec-plans/tickets/ticket-2026-03-10-007-backfill-logs.md)\n`TICKET-2026-03-10-007`\nstatus: `done`",
+      "color": "#FFFFFF"
     },
     {
       "id": "flow:ticket:TICKET-2026-03-10-008",
@@ -187,8 +187,8 @@
       "y": 1096,
       "width": 280,
       "height": 160,
-      "text": "### [記録から記事素材マップを作る](docs/exec-plans/tickets/ticket-2026-03-10-008-article-source-map.md)\n`TICKET-2026-03-10-008`\nstatus: `pending`",
-      "color": "#000000"
+      "text": "### [記録から記事素材マップを作る](docs/exec-plans/tickets/ticket-2026-03-10-008-article-source-map.md)\n`TICKET-2026-03-10-008`\nstatus: `done`",
+      "color": "#FFFFFF"
     },
     {
       "id": "flow:block:BLK-003",
@@ -196,25 +196,385 @@
       "x": 0,
       "y": 1376,
       "width": 420,
+      "height": 1824,
+      "text": "# [ワークショップ章を作る](docs/exec-plans/blocks/block-003-workshop-content.md)\n`BLK-003`\nstatus: `done`\n\n一次記録を踏まえて、`agent-builder-kit` と docs 駆動開発 / ハーネスエンジニアリングを主軸にした章構成と本文を作成する",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-005",
+      "type": "text",
+      "x": 620,
+      "y": 1376,
+      "width": 420,
       "height": 160,
-      "text": "# [ワークショップ章を作る](docs/exec-plans/blocks/block-003-workshop-content.md)\n`BLK-003`\nstatus: `pending`\n\n一次記録を踏まえて、agent-builder の流れを体験できる章構成と本文を作成する",
-      "color": "#000000"
+      "text": "## [導入章と主題の置き方を固める](docs/exec-plans/chunks/chunk-2026-03-10-005-intro-and-framing.md)\n`CHUNK-2026-03-10-005`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-009",
+      "type": "text",
+      "x": 1240,
+      "y": 1376,
+      "width": 280,
+      "height": 160,
+      "text": "### [「はじめに」章を追加し、この mdBook の骨子を最初に説明する](docs/exec-plans/tickets/ticket-2026-03-10-009-introduction-chapter.md)\n`TICKET-2026-03-10-009`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-010",
+      "type": "text",
+      "x": 1560,
+      "y": 1376,
+      "width": 280,
+      "height": 160,
+      "text": "### [既存 4 章の導入文を `agent-builder-kit` 主軸へ寄せる](docs/exec-plans/tickets/ticket-2026-03-10-010-reframe-existing-chapters.md)\n`TICKET-2026-03-10-010`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-006",
+      "type": "text",
+      "x": 620,
+      "y": 1584,
+      "width": 420,
+      "height": 160,
+      "text": "## [「agent-builder-kit の導入」章を書く](docs/exec-plans/chunks/chunk-2026-03-10-006-agent-builder-kit-intro.md)\n`CHUNK-2026-03-10-006`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-011",
+      "type": "text",
+      "x": 1240,
+      "y": 1584,
+      "width": 280,
+      "height": 160,
+      "text": "### [`agent-builder-kit の導入` 章の本文ドラフトを作る](docs/exec-plans/tickets/ticket-2026-03-10-011-agent-builder-kit-intro-draft.md)\n`TICKET-2026-03-10-011`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-012",
+      "type": "text",
+      "x": 1560,
+      "y": 1584,
+      "width": 280,
+      "height": 160,
+      "text": "### [`agent-builder-kit の導入` 章の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-012-agent-builder-kit-intro-polish.md)\n`TICKET-2026-03-10-012`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-007",
+      "type": "text",
+      "x": 620,
+      "y": 1792,
+      "width": 420,
+      "height": 160,
+      "text": "## [「plan-manager でプロジェクトの骨子を組む」章を書く](docs/exec-plans/chunks/chunk-2026-03-10-007-plan-manager-skeleton.md)\n`CHUNK-2026-03-10-007`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-013",
+      "type": "text",
+      "x": 1240,
+      "y": 1792,
+      "width": 280,
+      "height": 160,
+      "text": "### [`plan-manager でプロジェクトの骨子を組む` 章の本文ドラフトを作る](docs/exec-plans/tickets/ticket-2026-03-10-013-plan-manager-skeleton-draft.md)\n`TICKET-2026-03-10-013`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-014",
+      "type": "text",
+      "x": 1560,
+      "y": 1792,
+      "width": 280,
+      "height": 160,
+      "text": "### [`plan-manager でプロジェクトの骨子を組む` 章の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-014-plan-manager-skeleton-polish.md)\n`TICKET-2026-03-10-014`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-008",
+      "type": "text",
+      "x": 620,
+      "y": 2000,
+      "width": 420,
+      "height": 160,
+      "text": "## [「task-planner で仕事を chunk と ticket に分ける」章を書く](docs/exec-plans/chunks/chunk-2026-03-10-008-task-planner-breakdown.md)\n`CHUNK-2026-03-10-008`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-015",
+      "type": "text",
+      "x": 1240,
+      "y": 2000,
+      "width": 280,
+      "height": 160,
+      "text": "### [`task-planner で仕事を chunk と ticket に分ける` 章の本文ドラフトを作る](docs/exec-plans/tickets/ticket-2026-03-10-015-task-planner-breakdown-draft.md)\n`TICKET-2026-03-10-015`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-016",
+      "type": "text",
+      "x": 1560,
+      "y": 2000,
+      "width": 280,
+      "height": 160,
+      "text": "### [`task-planner で仕事を chunk と ticket に分ける` 章の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-016-task-planner-breakdown-polish.md)\n`TICKET-2026-03-10-016`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-009",
+      "type": "text",
+      "x": 620,
+      "y": 2208,
+      "width": 420,
+      "height": 160,
+      "text": "## [「task-worker で ticket を実行し、fact-report を返す」章を書く](docs/exec-plans/chunks/chunk-2026-03-10-009-task-worker-execution.md)\n`CHUNK-2026-03-10-009`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-017",
+      "type": "text",
+      "x": 1240,
+      "y": 2208,
+      "width": 280,
+      "height": 160,
+      "text": "### [`task-worker で ticket を実行し、fact-report を返す` 章の本文ドラフトを作る](docs/exec-plans/tickets/ticket-2026-03-10-017-task-worker-execution-draft.md)\n`TICKET-2026-03-10-017`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-018",
+      "type": "text",
+      "x": 1560,
+      "y": 2208,
+      "width": 280,
+      "height": 160,
+      "text": "### [`task-worker で ticket を実行し、fact-report を返す` 章の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-018-task-worker-execution-polish.md)\n`TICKET-2026-03-10-018`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-010",
+      "type": "text",
+      "x": 620,
+      "y": 2416,
+      "width": 420,
+      "height": 160,
+      "text": "## [「開発ログからチュートリアル本文を組み立てる」章を書く](docs/exec-plans/chunks/chunk-2026-03-10-010-log-to-article.md)\n`CHUNK-2026-03-10-010`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-019",
+      "type": "text",
+      "x": 1240,
+      "y": 2416,
+      "width": 280,
+      "height": 160,
+      "text": "### [`開発ログからチュートリアル本文を組み立てる` 章の本文ドラフトを作る](docs/exec-plans/tickets/ticket-2026-03-10-019-log-to-article-draft.md)\n`TICKET-2026-03-10-019`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-020",
+      "type": "text",
+      "x": 1560,
+      "y": 2416,
+      "width": 280,
+      "height": 160,
+      "text": "### [`開発ログからチュートリアル本文を組み立てる` 章の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-020-log-to-article-polish.md)\n`TICKET-2026-03-10-020`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-011",
+      "type": "text",
+      "x": 620,
+      "y": 2624,
+      "width": 420,
+      "height": 160,
+      "text": "## [「真のハーネスエンジニアリングへ至るには？」章を書く](docs/exec-plans/chunks/chunk-2026-03-10-011-true-harness-engineering.md)\n`CHUNK-2026-03-10-011`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-021",
+      "type": "text",
+      "x": 1240,
+      "y": 2624,
+      "width": 280,
+      "height": 160,
+      "text": "### [`真のハーネスエンジニアリングへ至るには？` 章の本文ドラフトを作る](docs/exec-plans/tickets/ticket-2026-03-10-021-true-harness-engineering-draft.md)\n`TICKET-2026-03-10-021`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-022",
+      "type": "text",
+      "x": 1560,
+      "y": 2624,
+      "width": 280,
+      "height": 160,
+      "text": "### [`真のハーネスエンジニアリングへ至るには？` 章の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-022-true-harness-engineering-polish.md)\n`TICKET-2026-03-10-022`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-012",
+      "type": "text",
+      "x": 620,
+      "y": 2832,
+      "width": 420,
+      "height": 160,
+      "text": "## [「おわりに」章を書く](docs/exec-plans/chunks/chunk-2026-03-10-012-closing-summary.md)\n`CHUNK-2026-03-10-012`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-023",
+      "type": "text",
+      "x": 1240,
+      "y": 2832,
+      "width": 280,
+      "height": 160,
+      "text": "### [`おわりに` 章の本文ドラフトを作る](docs/exec-plans/tickets/ticket-2026-03-10-023-conclusion-draft.md)\n`TICKET-2026-03-10-023`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-024",
+      "type": "text",
+      "x": 1560,
+      "y": 2832,
+      "width": 280,
+      "height": 160,
+      "text": "### [`おわりに` 章の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-024-conclusion-polish.md)\n`TICKET-2026-03-10-024`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-013",
+      "type": "text",
+      "x": 620,
+      "y": 3040,
+      "width": 420,
+      "height": 160,
+      "text": "## [「agent-builder-kit の導入」章へ Obsidian 導入ガイドを足す](docs/exec-plans/chunks/chunk-2026-03-10-013-obsidian-setup-guide.md)\n`CHUNK-2026-03-10-013`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-025",
+      "type": "text",
+      "x": 1240,
+      "y": 3040,
+      "width": 280,
+      "height": 160,
+      "text": "### [Obsidian 導入ガイドを `agent-builder-kit の導入` 章へ追加する](docs/exec-plans/tickets/ticket-2026-03-10-025-obsidian-setup-guide-draft.md)\n`TICKET-2026-03-10-025`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-026",
+      "type": "text",
+      "x": 1560,
+      "y": 3040,
+      "width": 280,
+      "height": 160,
+      "text": "### [Obsidian 導入ガイド追加後の推敲と根拠同期を行う](docs/exec-plans/tickets/ticket-2026-03-10-026-obsidian-setup-guide-polish.md)\n`TICKET-2026-03-10-026`\nstatus: `done`",
+      "color": "#FFFFFF"
     },
     {
       "id": "flow:block:BLK-004",
       "type": "text",
       "x": 0,
-      "y": 1656,
+      "y": 3320,
+      "width": 420,
+      "height": 576,
+      "text": "# [GitHub 公開と配布導線を作る](docs/exec-plans/blocks/block-004-publish-and-release.md)\n`BLK-004`\nstatus: `in_progress`\n\nGitHub 上で mdBook と関連成果物を公開し、チュートリアルとして参照できる状態にする",
+      "color": "#10B981"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-014",
+      "type": "text",
+      "x": 620,
+      "y": 3320,
       "width": 420,
       "height": 160,
-      "text": "# [GitHub 公開と配布導線を作る](docs/exec-plans/blocks/block-004-publish-and-release.md)\n`BLK-004`\nstatus: `pending`\n\nGitHub 上で mdBook と関連成果物を公開し、チュートリアルとして参照できる状態にする",
+      "text": "## [GitHub Pages 公開の骨格を作る](docs/exec-plans/chunks/chunk-2026-03-10-014-pages-publish-skeleton.md)\n`CHUNK-2026-03-10-014`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-027",
+      "type": "text",
+      "x": 1240,
+      "y": 3320,
+      "width": 280,
+      "height": 160,
+      "text": "### [GitHub Pages 公開向けに `book.toml` と workflow 骨格を追加する](docs/exec-plans/tickets/ticket-2026-03-10-027-pages-skeleton.md)\n`TICKET-2026-03-10-027`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-028",
+      "type": "text",
+      "x": 1560,
+      "y": 3320,
+      "width": 280,
+      "height": 160,
+      "text": "### [Pages 公開骨格の推敲と前提整理を行う](docs/exec-plans/tickets/ticket-2026-03-10-028-pages-skeleton-polish.md)\n`TICKET-2026-03-10-028`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-015",
+      "type": "text",
+      "x": 620,
+      "y": 3528,
+      "width": 420,
+      "height": 160,
+      "text": "## [公開導線を README と本文へ反映する](docs/exec-plans/chunks/chunk-2026-03-10-015-publish-docs-and-links.md)\n`CHUNK-2026-03-10-015`\nstatus: `done`\ntickets: `2`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-029",
+      "type": "text",
+      "x": 1240,
+      "y": 3528,
+      "width": 280,
+      "height": 160,
+      "text": "### [README と補助 docs に GitHub 公開導線を追加する](docs/exec-plans/tickets/ticket-2026-03-10-029-publish-docs-links.md)\n`TICKET-2026-03-10-029`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-030",
+      "type": "text",
+      "x": 1560,
+      "y": 3528,
+      "width": 280,
+      "height": 160,
+      "text": "### [本文と公開導線の表現を同期する](docs/exec-plans/tickets/ticket-2026-03-10-030-publish-docs-polish.md)\n`TICKET-2026-03-10-030`\nstatus: `done`",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:chunk:CHUNK-2026-03-10-016",
+      "type": "text",
+      "x": 620,
+      "y": 3736,
+      "width": 420,
+      "height": 160,
+      "text": "## [初回 publish と公開後確認を行う](docs/exec-plans/chunks/chunk-2026-03-10-016-publish-verification.md)\n`CHUNK-2026-03-10-016`\nstatus: `pending`\ntickets: `2`",
+      "color": "#000000"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-031",
+      "type": "text",
+      "x": 1240,
+      "y": 3736,
+      "width": 280,
+      "height": 160,
+      "text": "### [GitHub Pages の初回 publish を実施して結果を記録する](docs/exec-plans/tickets/ticket-2026-03-10-031-first-publish.md)\n`TICKET-2026-03-10-031`\nstatus: `blocked`",
+      "color": "#B91C1C"
+    },
+    {
+      "id": "flow:ticket:TICKET-2026-03-10-032",
+      "type": "text",
+      "x": 1560,
+      "y": 3736,
+      "width": 280,
+      "height": 160,
+      "text": "### [公開後確認と未実施チェックの整理を行う](docs/exec-plans/tickets/ticket-2026-03-10-032-post-publish-check.md)\n`TICKET-2026-03-10-032`\nstatus: `pending`",
       "color": "#000000"
     },
     {
       "id": "flow:block:BLK-005",
       "type": "text",
       "x": 0,
-      "y": 1936,
+      "y": 4016,
       "width": 420,
       "height": 160,
       "text": "# [運用導線と仕上げを整える](docs/exec-plans/blocks/block-005-guidance-and-finish.md)\n`BLK-005`\nstatus: `pending`\n\nREADME、Human Manual、必要な補助 docs を更新し、再開しやすいワークショップ状態にする",
@@ -343,11 +703,299 @@
       "color": "#94A3B8"
     },
     {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-005->flow:ticket:TICKET-2026-03-10-009",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-005",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-009",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-005->flow:ticket:TICKET-2026-03-10-010",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-005",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-010",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-005->flow:chunk:CHUNK-2026-03-10-006",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-005",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-006",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-006->flow:ticket:TICKET-2026-03-10-011",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-006",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-011",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-006->flow:ticket:TICKET-2026-03-10-012",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-006",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-012",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-006->flow:chunk:CHUNK-2026-03-10-007",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-006",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-007",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-007->flow:ticket:TICKET-2026-03-10-013",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-007",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-013",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-007->flow:ticket:TICKET-2026-03-10-014",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-007",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-014",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-007->flow:chunk:CHUNK-2026-03-10-008",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-007",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-008",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-008->flow:ticket:TICKET-2026-03-10-015",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-008",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-015",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-008->flow:ticket:TICKET-2026-03-10-016",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-008",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-016",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-008->flow:chunk:CHUNK-2026-03-10-009",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-008",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-009",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-009->flow:ticket:TICKET-2026-03-10-017",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-009",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-017",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-009->flow:ticket:TICKET-2026-03-10-018",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-009",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-018",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-009->flow:chunk:CHUNK-2026-03-10-010",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-009",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-010",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-010->flow:ticket:TICKET-2026-03-10-019",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-010",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-019",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-010->flow:ticket:TICKET-2026-03-10-020",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-010",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-020",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-010->flow:chunk:CHUNK-2026-03-10-011",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-010",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-011",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-011->flow:ticket:TICKET-2026-03-10-021",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-011",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-021",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-011->flow:ticket:TICKET-2026-03-10-022",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-011",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-022",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-011->flow:chunk:CHUNK-2026-03-10-012",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-011",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-012",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-012->flow:ticket:TICKET-2026-03-10-023",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-012",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-023",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-012->flow:ticket:TICKET-2026-03-10-024",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-012",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-024",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-012->flow:chunk:CHUNK-2026-03-10-013",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-012",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-013",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-013->flow:ticket:TICKET-2026-03-10-025",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-013",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-025",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-013->flow:ticket:TICKET-2026-03-10-026",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-013",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-026",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:block:BLK-003->flow:chunk:CHUNK-2026-03-10-005",
+      "fromNode": "flow:block:BLK-003",
+      "fromSide": "right",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-005",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
       "id": "flow-edge:flow:block:BLK-003->flow:block:BLK-004",
       "fromNode": "flow:block:BLK-003",
       "fromSide": "bottom",
       "toNode": "flow:block:BLK-004",
       "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-014->flow:ticket:TICKET-2026-03-10-027",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-014",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-027",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-014->flow:ticket:TICKET-2026-03-10-028",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-014",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-028",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-014->flow:chunk:CHUNK-2026-03-10-015",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-014",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-015",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-015->flow:ticket:TICKET-2026-03-10-029",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-015",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-029",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-015->flow:ticket:TICKET-2026-03-10-030",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-015",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-030",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-015->flow:chunk:CHUNK-2026-03-10-016",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-015",
+      "fromSide": "bottom",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-016",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-016->flow:ticket:TICKET-2026-03-10-031",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-016",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-031",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:chunk:CHUNK-2026-03-10-016->flow:ticket:TICKET-2026-03-10-032",
+      "fromNode": "flow:chunk:CHUNK-2026-03-10-016",
+      "fromSide": "right",
+      "toNode": "flow:ticket:TICKET-2026-03-10-032",
+      "toSide": "left",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:block:BLK-004->flow:chunk:CHUNK-2026-03-10-014",
+      "fromNode": "flow:block:BLK-004",
+      "fromSide": "right",
+      "toNode": "flow:chunk:CHUNK-2026-03-10-014",
+      "toSide": "left",
       "color": "#94A3B8"
     },
     {

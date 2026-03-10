@@ -17,6 +17,7 @@ Use this skill when the user asks to break a plan into chunks and tickets, reord
 - `docs/exec-plans/chunks/*.md`
 - `docs/exec-plans/tickets/*.md`
 - chunk 内 ticket table
+- 例外的に、配下 chunk の着手に伴う roll-up 整合として親 block の `pending -> in_progress` 同期
 
 Do not change the human request or the plan goal. If the plan itself needs to change, hand the work back to `plan-manager`.
 
@@ -25,9 +26,15 @@ Do not change the human request or the plan goal. If the plan itself needs to ch
 2. Every ticket has a valid `parent_chunk`.
 3. Promote `ticket` to `done` only after reviewer sign-off and source docs sync have been checked.
 4. `editable_paths`, `depends_on`, and `lane_order` are explicit enough for a worker to act.
-5. If chunk/ticket structure or status changed and Obsidian canvas is enabled, run canvas sync at the end.
+5. If a child chunk becomes `in_progress` or `done` while its parent block is still `pending`, sync the parent block to `in_progress`.
+6. If chunk/ticket structure or status changed and Obsidian canvas is enabled, run canvas sync at the end.
+
+## Guardrails
+- The block sync exception is only for `pending -> in_progress`.
+- Do not change block goal, ordering, or `depends_on`.
+- Do not promote block to `done` or `blocked`; hand those judgments back to `plan-manager`.
 
 ## Sync Rule
-- Run `obsidian-canvas-sync` only after updating docs/exec-plans/chunks/tickets.
+- Run `obsidian-canvas-sync` only after updating docs/exec-plans/chunks/tickets and any block status you synchronized under the exception above.
 - Prefer executing `scripts/sync_canvas.py` directly.
 - If schema integrity is broken, fix the docs first and only then sync.

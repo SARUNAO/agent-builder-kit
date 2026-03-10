@@ -56,6 +56,8 @@
   - `status`
   - `depends_on`
   - `lane_order`
+- 例外:
+  - `タスクプランナー` は、配下の最初の chunk を `in_progress` または `done` に上げる時に限り、roll-up 整合のため親 block の `pending -> in_progress` を同期してよい
 
 ### `chunk`
 - 主担当:
@@ -142,6 +144,16 @@
   - `プランオーナー` が docs sync を確認して `status = done` へ昇格させる
 - `block`
   - `プランオーナー` が `Done チェック` と配下整合を確認し、`status = done` へ昇格させる
+
+## in_progress 同期権限
+- `ticket`
+  - `タスクワーカー` が実装着手時に `pending -> in_progress` へ上げてよい
+- `chunk`
+  - `タスクプランナー` が着手中の実態に合わせて `pending -> in_progress` を反映してよい
+- `block`
+  - 原則は `プランオーナー` が `pending -> in_progress` を判断する
+  - ただし `タスクプランナー` は、配下 chunk の着手により roll-up 上すでに進行中とみなせる場合に限り、親 block の `pending -> in_progress` を同期してよい
+  - この例外は status の意味変更ではなく、既存計画の実行開始を source docs に反映するための整合更新として扱う
 
 ## done 昇格前の同期
 - `ticket = done` の前:
@@ -252,11 +264,13 @@ kind: reference
   - chunk 内 ticket table
 - `ticket` の `done` 昇格判断を持つ
 - `chunk` を `done` にする前の `Done チェック` と docs sync 準備を持つ
+- 配下 chunk の着手に伴う roll-up 整合として、親 block の `pending -> in_progress` 同期を行ってよい
 - 各 ticket 完了時に、追加の chunk / ticket / block が必要かを再判定する
 - `docs/exec-plans/active/attention-queue.md` を更新した場合は、`docs/references/attention-queue.md` の summary も current attention と一致しているか確認する
 - やらないこと:
   - 人間要求の再解釈
   - plan の目的変更
+  - block の `done` / `blocked` 昇格判断
 
 ### `タスクワーカー + reviewer`
 - 更新対象:
