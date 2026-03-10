@@ -2,5 +2,8 @@
 __pycache__/
 *.pyc
 
+.obsidian/
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
+book/
+agent_builder_tutorial.code-workspace

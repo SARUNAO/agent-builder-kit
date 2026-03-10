@@ -1,83 +1,22 @@
 # mdBook Workshop
 
-AI コーディング前提の開発フローを運用するための docs 駆動 workspace。
+`agent-builder-kit` を題材にした mdBook チュートリアルと、配布用 kit を同じ repository にまとめた公開用 repo です。
 
-## 公開導線
-- GitHub Pages の公開 site: `https://OWNER.github.io/REPO_NAME/`
+## 含まれるもの
+- `agent-builder-kit/`
+  - `AGENTS.md` や構造化された `docs/` を初期テンプレートとして展開するための kit
+- `src/` と `book.toml`
+  - mdBook 本文と設定
+
+## 公開先
+- GitHub Pages: `https://OWNER.github.io/REPO_NAME/`
 - GitHub repository: `https://github.com/OWNER/REPO_NAME`
-- 現在は placeholder 表記です。初回 publish 後に実 URL へ差し替えてください。
 
-## この repo の構成
-- この repo には mdBook 本体だけでなく、`agent-builder-kit/` も同梱しています。
-- ワークショップ本文は `src/` と `book.toml` を中心に構成し、kit 側の参照資料やテンプレートは `agent-builder-kit/` 配下に置きます。
-- つまり「チュートリアルとして読む mdBook」と「その土台になる kit」を、同一 repo 内で一緒に参照できる構成です。
+現在は placeholder 表記です。公開後に実 URL へ差し替えてください。
 
-## mdBook をまだ知らない人向け
-- mdBook は、markdown ファイル群から書籍形式の静的サイトを作るためのツール
-- この repo では、mdBook 自体を題材にしつつ、`plan-manager -> task-planner -> task-worker -> reviewer` の流れも教材化する
-- 2026-03-10 時点でこの repo では `mdbook v0.5.2` を導入済み
+## ローカルで見る
+1. `mdbook --version`
+2. `mdbook build`
+3. `mdbook serve --open`
 
-## BLK-002 開始時の最小手順
-1. Rust / Cargo が使えるか確認する: `cargo --version`
-2. mdBook が入っているか確認する: `mdbook --version`
-3. `mdbook` がなければ導入する: `cargo install mdbook`
-4. 骨格生成フェーズに入ったら、repo root で `mdbook init` を使って最小構成を作る
-
-## この段階で覚えておけばよいコマンド
-- `mdbook --version`
-- `mdbook init`
-- `mdbook build`
-- `mdbook serve --open`
-
-## ローカル確認の最小手順
-1. 生成確認だけなら repo root で `mdbook build` を実行する
-2. 出力先は `book/` なので、build 成功後はそこに HTML が生成される
-3. ブラウザ確認まで行うなら `mdbook serve --open` を実行する
-4. `serve --open` が使いにくい環境では `mdbook serve` だけでもよい
-
-## 2026-03-10 時点の確認結果
-- `mdbook build` は成功し、`book/` に HTML を出力できた
-- `mdbook serve --open` は通常のローカル環境では起動確認できた
-- ただし Codex の sandbox では localhost bind が制限され、`Operation not permitted (os error 1)` で失敗することがある
-- そのため、この repo の手順としては「ローカル端末で `mdbook serve --open` を試す」を正とする
-
-## いまはまだやらないこと
-- `book.toml` や `src/` の生成
-- GitHub Pages 用の deploy 設定
-- 章本文の本格執筆
-
-## 最初に理解しておくこと
-- init 後に `agent-builder-kit/` を削除した場合、展開元 package の docs や相対パスはもう前提にしない
-- Codex アプリを再起動して project を開き直したあとの AI は、bootstrap 前や直前セッションの文脈を持っていない前提で扱う
-- そのため、この repo の作業は毎回 `AGENTS.md` と `docs/` を読み直すところから始める
-
-## Codex アプリでの再開手順
-1. いまのスレッドを閉じる
-2. Codex アプリを再起動する
-3. この project を新しい project として開き直す
-4. 新しいセッションの AI に、まず `AGENTS.md`, `docs/index.md`, `docs/PLANS.md`, `docs/HUMAN_MANUAL.md` を読むよう依頼する
-5. その後で `plan-manager` から作業を始める
-
-## 入口
-- `AGENTS.md`
-- `docs/index.md`
-- `docs/HUMAN_MANUAL.md`
-- `docs/PLANS.md`
-- `docs/ROLE_SKILLS.md`
-
-## runtime artefact
-- planning: `docs/exec-plans/plan-spec.md`, `docs/exec-plans/blocks`
-- canvas: `docs/exec-plans/canvas/development-flow.canvas`
-- canonical skill source: `tools/codex-skills/`
-- user-facing skill export: `.agents/skills/`
-
-## BLK-007 以降の記録ルール
-- `fact-report` には、必要に応じて `decision / gotcha / command / before-after` へ再利用できる短いメモを残す
-- 記録のホームは `docs/exec-plans/active/` にあり、`decision-log.md`, `gotcha-log.md`, `command-log.md`, `before-after.md` を使い分ける
-- ただし worker は毎回 4 種類すべてを埋める必要はなく、その ticket で意味のある事実だけ返せばよい
-- raw ログ全文や長い感想ではなく、再現や記事化に必要な最小限の事実を優先する
-
-## 進め方
-- `plan-manager` に目的と追加要件を伝える
-- `task-planner` に chunk / ticket を切ってもらう
-- `task-worker` と `reviewer` で実装と確認を進める
+出力先は `book/` です。`book/` は生成物なので repository には含めません。
