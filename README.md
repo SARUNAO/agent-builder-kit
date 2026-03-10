@@ -9,7 +9,7 @@
   - mdBook 本文と設定
 
 ## 公開先
-- mdbook: `https://sarunao.github.io/agent-builder-kit/`
+- mdBook: [https://sarunao.github.io/agent-builder-kit/](https://sarunao.github.io/agent-builder-kit/)
 
 ## ローカルで見る
 1. `mdbook --version`
