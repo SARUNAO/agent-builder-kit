@@ -1,0 +1,128 @@
+{
+  "nodes": [
+    {
+      "id": "flow:ref:REF-PRODUCT-SENSE",
+      "type": "text",
+      "x": 450,
+      "y": -280,
+      "width": 280,
+      "height": 140,
+      "text": "## [Product Sense](docs/references/product-sense.md)\n`REF-PRODUCT-SENSE`\nreference",
+      "color": "#475569"
+    },
+    {
+      "id": "flow:ref:REF-DESIGN",
+      "type": "text",
+      "x": 770,
+      "y": -280,
+      "width": 280,
+      "height": 140,
+      "text": "## [Design](docs/references/design.md)\n`REF-DESIGN`\nreference",
+      "color": "#475569"
+    },
+    {
+      "id": "flow:ref:REF-ATTENTION",
+      "type": "text",
+      "x": 1090,
+      "y": -280,
+      "width": 280,
+      "height": 140,
+      "text": "## [Attention Queue](docs/references/attention-queue.md)\n`REF-ATTENTION`\nreference",
+      "color": "#475569"
+    },
+    {
+      "id": "flow:ref:REF-HUMAN-MANUAL",
+      "type": "text",
+      "x": 1410,
+      "y": -280,
+      "width": 280,
+      "height": 140,
+      "text": "## [Human Manual](docs/references/human-manual.md)\n`REF-HUMAN-MANUAL`\nreference",
+      "color": "#475569"
+    },
+    {
+      "id": "flow:block:BLK-001",
+      "type": "text",
+      "x": 0,
+      "y": 120,
+      "width": 420,
+      "height": 160,
+      "text": "# [初期スコープと公開方針を固める](docs/exec-plans/blocks/block-001-discovery.md)\n`BLK-001`\nstatus: `done`\n\n現状事実、公開ゴール、推奨方針を整理し、後続 block の前提を確定する",
+      "color": "#FFFFFF"
+    },
+    {
+      "id": "flow:block:BLK-002",
+      "type": "text",
+      "x": 0,
+      "y": 400,
+      "width": 420,
+      "height": 160,
+      "text": "# [mdBook の最小骨格を作る](docs/exec-plans/blocks/block-002-mdbook-skeleton.md)\n`BLK-002`\nstatus: `pending`\n\n`book.toml` と `src/` の最小構成を作り、ローカル build 可能な状態にする",
+      "color": "#000000"
+    },
+    {
+      "id": "flow:block:BLK-003",
+      "type": "text",
+      "x": 0,
+      "y": 680,
+      "width": 420,
+      "height": 160,
+      "text": "# [ワークショップ章を作る](docs/exec-plans/blocks/block-003-workshop-content.md)\n`BLK-003`\nstatus: `pending`\n\nagent-builder の流れを体験できる章構成と本文を作成する",
+      "color": "#000000"
+    },
+    {
+      "id": "flow:block:BLK-004",
+      "type": "text",
+      "x": 0,
+      "y": 960,
+      "width": 420,
+      "height": 160,
+      "text": "# [GitHub 公開と配布導線を作る](docs/exec-plans/blocks/block-004-publish-and-release.md)\n`BLK-004`\nstatus: `pending`\n\nGitHub 上で mdBook と関連成果物を公開し、チュートリアルとして参照できる状態にする",
+      "color": "#000000"
+    },
+    {
+      "id": "flow:block:BLK-005",
+      "type": "text",
+      "x": 0,
+      "y": 1240,
+      "width": 420,
+      "height": 160,
+      "text": "# [運用導線と仕上げを整える](docs/exec-plans/blocks/block-005-guidance-and-finish.md)\n`BLK-005`\nstatus: `pending`\n\nREADME、Human Manual、必要な補助 docs を更新し、再開しやすいワークショップ状態にする",
+      "color": "#000000"
+    }
+  ],
+  "edges": [
+    {
+      "id": "flow-edge:flow:block:BLK-001->flow:block:BLK-002",
+      "fromNode": "flow:block:BLK-001",
+      "fromSide": "bottom",
+      "toNode": "flow:block:BLK-002",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:block:BLK-002->flow:block:BLK-003",
+      "fromNode": "flow:block:BLK-002",
+      "fromSide": "bottom",
+      "toNode": "flow:block:BLK-003",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:block:BLK-003->flow:block:BLK-004",
+      "fromNode": "flow:block:BLK-003",
+      "fromSide": "bottom",
+      "toNode": "flow:block:BLK-004",
+      "toSide": "top",
+      "color": "#94A3B8"
+    },
+    {
+      "id": "flow-edge:flow:block:BLK-004->flow:block:BLK-005",
+      "fromNode": "flow:block:BLK-004",
+      "fromSide": "bottom",
+      "toNode": "flow:block:BLK-005",
+      "toSide": "top",
+      "color": "#94A3B8"
+    }
+  ]
+}
