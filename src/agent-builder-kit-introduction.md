@@ -1,8 +1,6 @@
 # agent-builder-kit の導入
 
-まずは `agent-builder-kit` を用意します。公開後はここに GitHub の公開 repo リンクを置く予定です。
-
-> 現在はまだ公開前です。GitHub へ公開したあとで、この導線は同一 repo の実 URL に差し替えてください。
+まずは [`agent-builder-kit`](https://github.com/SARUNAO/agent-builder-kit) を用意します。
 
 ## 新規プロジェクトを開始
 

@@ -42,7 +42,7 @@
 これがあると、人間はあとから「何をしたのか」を会話ログに頼らず追えます。
 同時に、次の role もその ticket の結果を一次記録として再利用できます。
 
-今回の project でも、`TICKET-002` の `fact-report` には、`mdbook init --force --title "mdBook Workshop" .` を実行して最小骨格を作ったことや、`book.toml`, `src/SUMMARY.md`, `src/overview.md` が生成されたことが残っています。
+今回の project でも、`TICKET-002` の `fact-report` には、`mdbook init --force --title "agent-builder-kit Tutorial" .` を実行して最小骨格を作ったことや、`book.toml`, `src/SUMMARY.md`, `src/agent-builder-kit-introduction.md` が生成されたことが残っています。
 
 ## reviewer が入るとき
 
