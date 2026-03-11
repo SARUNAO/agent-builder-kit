@@ -1,3 +1,12 @@
+---
+reference_id: REF-HUMAN-MANUAL
+title: Human Manual
+lane_order: 400
+owner_role: plan_owner
+sync_mode: direct_source
+kind: reference_source
+---
+
 # Human Manual
 
 ## 目的
@@ -187,7 +196,8 @@
 - status 更新後は canvas sync まで含めて 1 セットで考える
 
 ## reference summary との分担
-- この file は人間向けの本体 manual として扱う
-- `docs/references/human-manual.md` は canvas reference band 用の summary view とする
+- この file は reference band の本体 docs として扱う
+- `docs/references/human-manual.md` は optional summary / hub として残してよい
+- summary を残す場合も、canvas band の代替正本にはしない
 - 本体には判断責務、承認ポイント、差し戻し条件、進め方、release 前確認を残す
 - summary には短い見取り図だけを置き、詳細ルールは本体に残す

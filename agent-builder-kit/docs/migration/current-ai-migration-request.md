@@ -6,6 +6,11 @@
 - owner: プランオーナー
 - last_updated: 2026-03-09
 
+## package 内での位置づけ
+- この file は package 自身の self-hosting migration 履歴 / handoff note
+- generic generated repo の migration docs 正本ではない
+- archive 退避先が確定したら package canonical から外す前提で保持している
+
 あなたはこのプロジェクトの現行 docs / 運用を把握している AI です。  
 以下の migration bootstrap を参照し、既存運用を新 schema へ写像してください。
 

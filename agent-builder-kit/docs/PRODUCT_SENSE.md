@@ -1,3 +1,12 @@
+---
+reference_id: REF-PRODUCT-SENSE
+title: Product Sense
+lane_order: 100
+owner_role: plan_owner
+sync_mode: direct_source
+kind: reference_source
+---
+
 # Product Sense
 
 ## このプロジェクトは何か
@@ -27,7 +36,8 @@
 - ドメイン仕様そのものを自動生成すること
 
 ## reference summary との分担
-- この file は本体 docs として扱う
-- `docs/references/product-sense.md` は canvas reference band 用の summary view とする
+- この file は reference band の本体 docs として扱う
+- `docs/references/product-sense.md` は optional summary / hub として残してよい
+- summary を残す場合も、canvas band の代替正本にはしない
 - 本体には背景、対象ユーザー、価値、非目的の説明を残す
 - summary には短い見取り図だけを置き、全文コピーにしない

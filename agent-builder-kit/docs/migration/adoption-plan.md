@@ -6,6 +6,11 @@
 - owner: プランオーナー
 - last_updated: 2026-03-09
 
+## package 内での位置づけ
+- この file は package 自身の self-hosting migration 履歴 / handoff note
+- generic generated repo の migration docs 正本ではない
+- archive 退避先が確定したら package canonical から外す前提で保持している
+
 ## 目的
 - 既存運用を保ったまま、この repo 自身が docs_builder の生成物でも再現できることを確認する。
 - そのうえで、`migration-bootstrap/` の内容をこの repo の正式運用へ段階的に採用する。

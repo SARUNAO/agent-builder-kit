@@ -9,7 +9,6 @@
 
 ## 含めたもの
 - `README.md`
-- `docs-builder.toml.example`
 - `tools/`
 - `docs/`
 
@@ -36,7 +35,10 @@
 ## 同梱の参照資産
 - `docs/references/` に workflow / role / review reference を同梱する
 - `docs/templates/` に planning template の正本を同梱する
+- `docs/migration/` は package 自身の self-hosting migration 履歴 / handoff note として暫定同梱する
 - `examples/current-workflow-a/` のような前プロジェクト固有資料は同梱しない
+
+`docs/migration/` は generic generated repo の migration docs 正本そのものではなく、archive 退避先が確定するまで package 内に保持している履歴 note として扱う。
 
 ## 含めていないもの
 - `.agents/skills/` の package mirror
@@ -64,7 +66,7 @@
 
 ## 使い方
 1. 新規プロジェクトのルートへ `agent-builder-kit/` ディレクトリをそのまま置く
-2. `agent-builder-kit/docs-builder.toml.example` を repo ルートの `docs-builder.toml` にして編集する
+2. `agent-builder-kit/docs/DOCS_BUILDER_TOML.md` を見て、repo ルートに `docs-builder.toml` を作成して編集する
 3. `python3 agent-builder-kit/tools/init_runner.py docs-builder.toml` を実行する
 4. init 後、AI は人間に `agent-builder-kit/` を残すか削除するか確認する
 5. 既定は保持で、削除したい場合だけ `--cleanup-package` 付きで再実行するか、人間が手動削除する
@@ -79,7 +81,7 @@
 - `docs/index.md` から主要 docs に辿れること
 - `docs/exec-plans/plan-spec.md` と `docs/exec-plans/blocks/` が生成されていること
 - `docs/references/` に reference band 用の seed が生成されていること
-- `docs/exec-plans/active/attention-queue.md` が空 seed で始まること
+- `docs/exec-plans/active/attention-queue.md` が cluster 名ベースの static cleanup review seed で始まること
 - `tools/codex-skills/` に canonical role skill が揃っていること
 - generated repo に `.agents/skills/` が export され、利用者向け入口として読めること
 - code ticket は `task-worker` 後に reviewer を呼ぶ前提で docs を読めること

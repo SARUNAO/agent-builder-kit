@@ -6,6 +6,11 @@
 - owner: プランオーナー
 - last_updated: 2026-03-09
 
+## package 内での位置づけ
+- この file は package 自身の self-hosting migration 履歴 / handoff note
+- generic generated repo の migration docs 正本ではない
+- archive 退避先が確定したら package canonical から外す前提で保持している
+
 ## 現在の運用要約
 - この repo には既に docs/ と AGENTS.md があり、builder 自身の正本として運用している。まずは既存 docs を壊さずに migration-bootstrap を別出力で生成し、差分を確認したい。
 - source of truth はルート `AGENTS.md`, `docs/`, `docs/exec-plans/`, `docs/references/` で、template / reference asset も `docs/` 配下に集約されている。

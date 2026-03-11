@@ -38,6 +38,7 @@ description: 上流の要求整理と計画更新を行う canonical skill。pro
 9. `task-planner` が親 block の `pending -> in_progress` を同期した場合も含め、block status を chunk / ticket の roll-up と論理整合させる。
 10. `task-planner` に許す block 更新は上記の `pending -> in_progress` 同期だけとし、それ以外の block status / goal / 順序判断は自分で持つ。
 11. block 構造、順序、status が変わり canvas が有効なら最後に sync する。
+12. `Product Sense`, `Design`, `Human Manual`, `Attention Queue` は reference band の本体 docs として扱い、`docs/references/*.md` は残す場合だけ optional summary / hub として追従要否を判断する。
 
 ## 聞き取りルール
 - 実装前提がまだ曖昧なら、block 実行を進める前に人間確認を優先する。
@@ -54,3 +55,4 @@ description: 上流の要求整理と計画更新を行う canonical skill。pro
 - source docs 更新後にだけ `obsidian-canvas-sync` を実行する。
 - 可能なら `scripts/sync_canvas.py` を直接実行する。
 - sync に必要な source docs が欠けるなら `.canvas` を手編集せず報告して止まる。
+- generated attention queue の静的 seed は docs 正本を前提に扱い、generator code string を唯一正本とみなさない。

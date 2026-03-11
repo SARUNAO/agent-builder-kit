@@ -43,8 +43,8 @@
 ## `docs-sync` support skill の位置づけ
 - `docs-sync` は、role skill が意味判断を終えたあとの docs 整合だけを扱う補助 skill とする
 - 想定責務:
-  - `docs/references/*.md` の summary view を本体 docs に追従させる
-  - `docs/exec-plans/active/attention-queue.md` と `docs/references/attention-queue.md` の summary 整合を取る
+  - `docs/references/*.md` に残す optional summary / hub docs を本体 docs に追従させる
+  - `docs/exec-plans/active/attention-queue.md` に対する optional summary / hub docs が残る場合、その整合を取る
   - 必要なら `docs/PLANS.md` や hub docs の軽微な整合を取る
 - やらないこと:
   - block / chunk / ticket の意味変更
@@ -54,16 +54,23 @@
 - 実装する場合は `obsidian_canvas pack` の一部として ship し、canvas / reference band を使わない profile へは載せない
 
 ## reference band との責務分界
-- reference band の直接正本は `docs/references/*.md`
-- ただし reference note の意味上の本体 docs は別にある
+- `Product Sense`, `Design`, `Human Manual`, `Attention Queue` の reference band は `direct-source` を採用し、本体 docs を直接入力として扱う
+- 本体 docs は次の 4 つとする
   - `Product Sense` -> `docs/PRODUCT_SENSE.md`
   - `Design` -> `docs/DESIGN.md`
   - `Attention Queue` -> `docs/exec-plans/active/attention-queue.md`
   - `Human Manual` -> `docs/HUMAN_MANUAL.md`
-- role skill はまず本体 docs を更新し、その変更が reference band に見えるべき場合だけ対応する `docs/references/*.md` を追従させる
+- `docs/references/*.md` は optional summary / hub / 補助 guide として残してよいが、band integrity の唯一条件にはしない
+- role skill はまず本体 docs を更新し、optional summary / hub docs を残す場合だけ追従要否を判断する
 - reference note を本体 docs の代替正本として更新してはならない
 - `docs-sync` を導入する場合も、この責務分界は維持する
-- つまり role skill が本体 docs を更新し、`docs-sync` は summary / hub の追従だけを行う
+- つまり role skill が本体 docs を更新し、`docs-sync` は optional summary / hub の追従だけを行う
+
+## generated attention queue との責務分界
+- static queue seed は docs 正本から生成する前提で扱い、generator code string を唯一正本にしない
+- `AI案内可` は static item としてそのまま載せてよい
+- `条件付き` は follow-up reminder に限って載せてよく、採否や削除を先回りして決めない
+- `人間判断必須` は human review trigger としてだけ載せ、解決策を静的文言へ埋め込まない
 
 ## orchestration rule
 
@@ -78,7 +85,7 @@
 8. chunk / block を `done` に上げる前に source docs sync を確認する
 9. 必要な `done` 昇格を反映する
 10. block 順序または status が変わったら `obsidian-canvas-sync` を実行する
-11. `docs/PRODUCT_SENSE.md`, `docs/DESIGN.md`, `docs/HUMAN_MANUAL.md` を変えた場合は、対応する `docs/references/*.md` の summary 追従要否も判断する
+11. `docs/PRODUCT_SENSE.md`, `docs/DESIGN.md`, `docs/HUMAN_MANUAL.md` を変えた場合は、残している `docs/references/*.md` の optional summary / hub の追従要否も判断する
 12. `task-planner` が行える block status 更新は、親 block の `pending -> in_progress` 同期だけとみなし、それ以外の block 判断は自分で引き取る
 
 ## `plan-manager` の聞き取りルール
@@ -104,7 +111,7 @@
 7. block の `done`, `blocked`, `goal`, `depends_on`, `lane_order` 変更が必要なら `plan-manager` へ返す
 8. 必要な ticket `done` 昇格と chunk handoff を反映する
 9. `obsidian-canvas-sync` を実行する
-10. `docs/exec-plans/active/attention-queue.md` を更新した場合は、`docs/references/attention-queue.md` の追従要否も判断する
+10. `docs/exec-plans/active/attention-queue.md` を更新した場合は、残している optional summary / hub docs の追従要否も判断する
 
 ### `task-worker`
 1. 対象 ticket と関連 chunk を読む
@@ -170,7 +177,7 @@ reviewer 分離は contract 定義、asset 実装、bootstrap 反映まで閉じ
 ## 移行中の注意
 - role skill の正本は `docs/exec-plans/` と `docs/references/` を使う
 - legacy layout を読む必要がある場合は、manifest override を前提に明示的に扱う
-- `docs/references/*.md` は canvas 用の summary view であり、本体 docs を置き換えない
+- `docs/references/*.md` は optional summary / hub / 補助 guide であり、本体 docs や direct-source band を置き換えない
 - reference band の自動同期責務は、`TICKET-017` の判断により support skill `docs-sync` へ分離してよいものとして扱う
 
 ## `TICKET-017` 時点の決定
@@ -189,3 +196,8 @@ reviewer 分離は contract 定義、asset 実装、bootstrap 反映まで閉じ
 - `.agents/skills/` は利用者向け export 層として定義する
 - generated repo で `.agents/skills/` が存在する場合は入口をそちらへ寄せてよい
 - ただし source repo / package docs / bootstrap contract の正本は引き続き `tools/codex-skills/` に置く
+
+## `TICKET-022` 時点の決定
+- reference band は `direct-source` を正契約とし、summary note は optional な従属 docs として扱う
+- generated attention queue は docs 正本を前提にし、`AI案内可 / 条件付き / 人間判断必須` の境界を静的 seed へ反映する
+- `人間判断必須` は human review trigger としてだけ queue に載せ、解決策を role skill が先回りして固定しない

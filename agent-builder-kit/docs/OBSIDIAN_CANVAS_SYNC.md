@@ -24,20 +24,25 @@
   - `plan-spec`
   - `chunk-sheet`
   - `ticket`
-  - `docs/references/*.md`
+  - `docs/PRODUCT_SENSE.md`
+  - `docs/DESIGN.md`
+  - `docs/HUMAN_MANUAL.md`
+  - `docs/exec-plans/active/attention-queue.md`
+- optional summary / hub docs として `docs/references/*.md` を残してよい
 - `.canvas` はこれらを読み、再同期で再構成する可視化レイヤー
 
 ## reference band の正本契約
-- canvas 上段の reference band が直接読む正本は `docs/references/*.md` とする
-- ただし `docs/references/*.md` はすべて同じ性質ではない
-  - `Product Sense`, `Design`, `Human Manual`
-    - 意味上の本体は `docs/PRODUCT_SENSE.md`, `docs/DESIGN.md`, `docs/HUMAN_MANUAL.md`
-    - `docs/references/*.md` は canvas 用 summary view として扱う
-  - `Attention Queue`
-    - 意味上の本体は `docs/exec-plans/active/attention-queue.md`
-    - `docs/references/attention-queue.md` は attention の要約窓口として扱う
+- canvas 上段の reference band は `direct-source` を正契約とし、本体 docs を直接読む
+- 本体 docs は次の 4 つとする
+  - `Product Sense` -> `docs/PRODUCT_SENSE.md`
+  - `Design` -> `docs/DESIGN.md`
+  - `Attention Queue` -> `docs/exec-plans/active/attention-queue.md`
+  - `Human Manual` -> `docs/HUMAN_MANUAL.md`
+- 本体 docs には `reference_id`, `title`, `lane_order`, `owner_role`, `sync_mode: direct_source` の frontmatter を置く
+- `docs/references/*.md` は残す場合も optional summary / hub として扱い、band の代替正本にはしない
 - generic 配布 package 自体には project-specific な reference note を同梱しなくてよい
-- ただし bootstrap 後に生成される `docs/references/*.md` は、この契約で読める必要がある
+- bootstrap 後に summary note を残す場合は、本体 docs への従属関係を明示する
+- `TICKET-2026-03-11-025` 完了前は、実装が旧 `docs/references/*.md` 入力のままでも、契約上は移行途中として扱う
 
 ## block の扱い
 - block の正本は `plan-spec` の `High-level blocks` テーブルとする
@@ -75,7 +80,10 @@
 
 ### 上段中央 reference band
 - source:
-  - `docs/references/*.md`
+  - `docs/PRODUCT_SENSE.md`
+  - `docs/DESIGN.md`
+  - `docs/exec-plans/active/attention-queue.md`
+  - `docs/HUMAN_MANUAL.md`
 - ノード:
   - `PRODUCT_SENSE`
   - `DESIGN`
@@ -136,45 +144,53 @@
 - `parent_chunk` を持つ
 - status を持つ
 
-### reference note
+### reference source doc
+- `Product Sense`, `Design`, `Human Manual`, `Attention Queue` の本体 docs に適用する
+- `reference_id` と `title` を frontmatter に持つ
+- `lane_order` で上段中央 band の並びを制御する
+- `owner_role` を frontmatter に持ち、誰が更新責務を持つかを明示する
+- `sync_mode: direct_source` を frontmatter に持つ
+- band ノードはこの docs 自体を直接開く
+
+### optional summary / hub note
 - 任意
 - `reference_id` と `title` を frontmatter に持つ
-- `source_doc` を frontmatter に持ち、意味上の本体 docs を明示する
+- `source_doc` を frontmatter に持ち、本体 docs への従属関係を明示する
 - `sync_mode` を frontmatter に持ち、`summary_mirror` または `runtime_summary` を宣言する
 - `owner_role` を frontmatter に持ち、誰が更新責務を持つかを明示する
-- `lane_order` で上段中央 band の並びを制御する
+- `lane_order` は summary / hub 内での並びや互換用途に使ってよい
 - 進捗 edge には参加しない
-- `Product Sense` / `Design` / `Human Manual` は本体 docs の summary view を置ける
-- `Attention Queue` は runtime 的な性質を持つため、他 reference と分けた更新ルールを持ってよい
+- band integrity の唯一条件にはしない
 
 ## 現在の path 契約
 - `.canvas` の正本は `docs/exec-plans/canvas/development-flow.canvas`
-- reference band の正本は `docs/references/*.md`
+- reference band の正契約は本体 docs の direct-source とする
 - source docs は `docs/exec-plans/plan-spec.md`, `docs/exec-plans/chunks/*.md`, `docs/exec-plans/tickets/*.md` を使う
+- optional summary / hub docs を残す場合だけ `docs/references/*.md` を読む
 
 ## reference band の更新責務
-- `docs/references/product-sense.md`
-  - 本体: `docs/PRODUCT_SENSE.md`
+- `docs/PRODUCT_SENSE.md`
   - owner: `plan-owner`
   - trigger: 価値仮説、対象ユーザー、成功条件が変わったとき
-- `docs/references/design.md`
-  - 本体: `docs/DESIGN.md`
+- `docs/DESIGN.md`
   - owner: `plan-owner`
   - trigger: 構成判断、責務境界、設計前提が変わったとき
-- `docs/references/attention-queue.md`
-  - 本体: `docs/exec-plans/active/attention-queue.md`
+- `docs/exec-plans/active/attention-queue.md`
   - owner: `task-planner`
   - trigger: attention の追加、解消、優先順位変更が起きたとき
-- `docs/references/human-manual.md`
-  - 本体: `docs/HUMAN_MANUAL.md`
+- `docs/HUMAN_MANUAL.md`
   - owner: `plan-owner`
   - trigger: 人間判断ルール、禁止事項、介入ポイントが変わったとき
+- `docs/references/*.md`
+  - owner: 本体 docs と同じ role、または将来の `docs-sync`
+  - trigger: summary / hub を残す判断をしたうえで、本体 docs を更新したとき
 
 ## sync 起点の現時点判断
 - role skill 自体は本体 docs の更新責務を持つ
-- reference band の summary 更新は、現時点では role skill の実装へ焼き込まず、後続 `TICKET-017` で support skill として分離する前提で契約だけ先に定義する
-- それまでの暫定運用では、本体 docs を更新した role が同ターンで対応する `docs/references/*.md` も追従させる
-- `.canvas` 再同期は reference note 更新後に行い、placeholder が残ったまま band を再生成しない
+- role skill はまず本体 docs を更新する
+- optional summary / hub docs を残す場合だけ、同ターンで追従要否を判断する
+- `.canvas` 再同期は source docs 更新後に行う
+- `TICKET-2026-03-11-025` 完了前は script 実装が `docs/references/*.md` を読んでいても、contract drift ではなく移行途中として扱う
 
 ## ノード配置ルール
 

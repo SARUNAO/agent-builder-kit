@@ -5,9 +5,11 @@
 - 対話結果や質問票ではなく、最終的に採用した設定をここへ集約する
 
 ## 最初の一手
-1. ルートの [docs-builder.toml.example](../docs-builder.toml.example) をコピーして `docs-builder.toml` を作る
+1. repo ルートに `docs-builder.toml` を新規作成する
 2. `project`, `workflow`, `generation` を最低限埋める
 3. `python3 tools/init_runner.py docs-builder.toml` を実行する
+
+package には `docs-builder.toml.example` を同梱していない。最小構成はこの docs の項目一覧を見ながら手で作る。
 
 ## 最低限触る項目
 ### `[project]`

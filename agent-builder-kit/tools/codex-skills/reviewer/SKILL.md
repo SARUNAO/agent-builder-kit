@@ -37,6 +37,7 @@ description: code review 専用の canonical skill。`task-worker` が終えた 
 - docs-only skip の条件が曖昧なら、skip せず review を行う。
 - 実装方針の好き嫌いではなく、回帰、境界逸脱、保守性低下、テスト不足を優先して見る。
 - findings がない場合でも、確認した観点を短く残してよい。
+- `sync_canvas.py` や `init_runner.py` に触る ticket では、direct-source reference band と docs 正本 queue seed の境界が壊れていないかを優先確認する。
 
 ## sync ルール
 - ticket docs 更新後にだけ `obsidian-canvas-sync` を実行する。

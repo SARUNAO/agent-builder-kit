@@ -32,8 +32,19 @@ description: ticket 単位の実装を扱う canonical skill。ticket status と
 5. blocker が見つかったら plan 構造を書き換えず ticket レベルで `blocked` を付けて上流へ返す。
 6. ticket を `done` に上げない。最終昇格は `task-planner` に渡す。
 7. ticket status が変わり canvas が有効なら最後に sync する。
+8. reference band や generated attention queue に関わる ticket では、本体 docs と docs 正本を先に更新し、`docs/references/*.md` や generator code string を唯一正本として扱わない。
+
+## commit 運用
+- 通常は、ticket 完了ごとに commit を促さない。
+- 既定の区切りは chunk 単位であり、commit 提案は原則 `task-planner` 側へ寄せる。
+- 例外として、次の場合だけ早めの commit を提案してよい。
+  - 差分が大きい
+  - 危険な修正で切り戻ししやすさを優先したい
+  - 人間確認の直前で履歴固定の価値が高い
+- 上記に当たらない限り、ticket を終えた時点では未コミットのまま次 ticket へ進んでよい。
 
 ## sync ルール
 - ticket docs 更新後にだけ `obsidian-canvas-sync` を実行する。
 - 可能なら `scripts/sync_canvas.py` を直接実行する。
 - sync が失敗したら ticket docs を正本として残し、失敗だけ報告する。
+- optional summary / hub docs の更新は、その ticket の editable_paths に明示されているときだけ行う。

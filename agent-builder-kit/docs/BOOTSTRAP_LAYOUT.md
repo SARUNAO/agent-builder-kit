@@ -4,7 +4,7 @@
 
 ## 結論
 - runtime artefact の正本は `docs/exec-plans/` に置く
-- reference band の正本は `docs/references/` に置く
+- reference band の正本は本体 docs に置き、`docs/references/` は optional summary / hub として扱う
 - root 直下には `README.md`, `AGENTS.md`, `docs/`, `tools/`, `docs-builder.toml` を基本として残す
 - `agent-builder-kit/` は source repo や一時展開では存在し得るが、生成先 repo の恒久構成には含めない
 - `docs-builder.toml` は保持を既定とし、`agent-builder-kit/` は残してもよいが不要なら人間が手動削除する
@@ -48,7 +48,8 @@ docs/
 
 ## 判断基準
 - `blocks` / `chunks` / `tickets` / `fact-reports` / `canvas` は同じ execution lifecycle に属するため、`docs/exec-plans/` の同じ親配下へ集約する
-- reference band は runtime 可視化と結びつくため、root `references/` は使わず `docs/references/` に一本化する
+- reference band は `docs/PRODUCT_SENSE.md`, `docs/DESIGN.md`, `docs/HUMAN_MANUAL.md`, `docs/exec-plans/active/attention-queue.md` を direct source として使う
+- `docs/references/` は optional summary / hub として残してよく、band の唯一正本にはしない
 - source asset と generated artefact を root で混在させない
 
 ## source repo と generated repo の区別

@@ -18,9 +18,9 @@
   - `docs/exec-plans/tickets/*.md`
 - fact-report の正本:
   - `docs/exec-plans/fact-reports/*.md`
-- human-facing reference の正本:
+- human-facing reference の補助 / summary docs:
   - `docs/references/*.md`
-- human-facing reference の意味上の本体 docs:
+- reference band の本体 docs:
   - `docs/PRODUCT_SENSE.md`
   - `docs/DESIGN.md`
   - `docs/HUMAN_MANUAL.md`
@@ -30,7 +30,7 @@
 
 `.canvas` は常に派生物であり、正本にはしない。
 
-`docs/references/*.md` は canvas band が直接読む正本だが、`summary view` として本体 docs への案内責務も持つ。reference note 単体を意味上の唯一正本として扱わない。
+`docs/references/*.md` は補助 summary / hub docs の正本として扱ってよいが、`Product Sense`, `Design`, `Human Manual`, `Attention Queue` の reference band は本体 docs を直接入力として扱う前提で設計する。summary note を残す場合も従属 docs として扱い、band integrity の唯一条件にはしない。
 
 ## 移行中の互換 path
 - source-of-truth はすでに `docs/exec-plans/` と `docs/references/` へ移した
@@ -166,6 +166,16 @@
 
 `.canvas` sync はこれら source docs sync の後段に置く。
 
+## commit cadence
+- 既定の区切りは `ticket -> ticket -> ticket -> chunk` とする。
+- `タスクワーカー`
+  - 通常は ticket 完了ごとに commit を促さない。
+  - 例外は、差分が大きい場合、危険な修正の場合、人間確認の直前の場合だけとする。
+- `タスクプランナー`
+  - chunk close、または複数 ticket の `done` 昇格と source docs sync をまとめた区切りで commit を提案する。
+- `プランオーナー`
+  - block 裁定や上流判断の差分は、必要なら独立 commit にしてよい。
+
 ## frontmatter schema
 
 ### block note
@@ -245,7 +255,7 @@ kind: reference
 - block ごとの聞き取り項目には、必要に応じて実装言語、フレームワーク、設定方針、外部依存、テスト方針を含める
 - 推奨案には、少なくとも 1 つのおすすめと、その理由を残す
 - `block` を `done` にする前に `Done チェック` と source docs sync を確認する
-- `docs/PRODUCT_SENSE.md`, `docs/DESIGN.md`, `docs/HUMAN_MANUAL.md` を更新したときは、対応する `docs/references/*.md` の summary も current context と一致しているか確認する
+- `docs/PRODUCT_SENSE.md`, `docs/DESIGN.md`, `docs/HUMAN_MANUAL.md` を更新したときは、残している `docs/references/*.md` の summary / hub の追従要否を判断する
 - やらないこと:
   - chunk / ticket の詳細分解
 
@@ -259,7 +269,7 @@ kind: reference
 - `ticket` の `done` 昇格判断を持つ
 - `chunk` を `done` にする前の `Done チェック` と docs sync 準備を持つ
 - 各 ticket 完了時に、追加の chunk / ticket / block が必要かを再判定する
-- `docs/exec-plans/active/attention-queue.md` を更新した場合は、`docs/references/attention-queue.md` の summary も current attention と一致しているか確認する
+- `docs/exec-plans/active/attention-queue.md` を更新した場合は、残している `docs/references/attention-queue.md` の summary / hub の追従要否を判断する
 - やらないこと:
   - 人間要求の再解釈
   - plan の目的変更
@@ -282,7 +292,7 @@ kind: reference
 - `プランオーナー` が block を追加、削除、改名、status 変更したとき
 - `タスクプランナー` が chunk / ticket を追加、削除、並び替え、status 変更したとき
 - `タスクワーカー + reviewer` が ticket status を変えたとき
-- 本体 docs または active attention の変更で対応する `docs/references/*.md` を更新したとき
+- reference band の本体 docs、active attention、または補助 `docs/references/*.md` を更新したとき
 
 上記のいずれでも、最後に `obsidian-canvas-sync` を実行して `.canvas` を再同期する。
 
@@ -292,11 +302,19 @@ kind: reference
 - `parent_chunk` は必ず `docs/exec-plans/chunks/*.md` に存在する
 - `lane_order` は同一親の下で重複してよいが、並びは昇順を基本とする
 - frontmatter と本文 table の status が食い違う場合、frontmatter を正本とする
-- reference note は `reference_id`, `title`, `source_doc`, `sync_mode`, `owner_role`, `lane_order` を持つ
+- reference band の primary input は本体 docs とし、band 用 metadata の正本契約は `docs/OBSIDIAN_CANVAS_SYNC.md` に従う
+- `docs/references/*.md` を summary / hub note として残す場合は `reference_id`, `title`, `source_doc`, `sync_mode`, `owner_role`, `lane_order` を持つ
 - `source_doc` は実在する docs を指し、`sync_mode` は `summary_mirror` か `runtime_summary` のどちらかにする
 
+## generated attention queue 契約
+- static queue seed の canonical source は docs 側に置き、generator code string を唯一正本にしない
+- `AI案内可` は static item としてそのまま載せてよい
+- `条件付き` は follow-up reminder としてだけ載せてよく、削除や採否を先回りして決めない
+- `人間判断必須` は human review trigger としてだけ載せ、解決策や削除指示を静的文言へ埋め込まない
+
 ## migration 契約
-- runtime artefact の正本は `docs/exec-plans/`、reference band の正本は `docs/references/` として固定する
+- runtime artefact の正本は `docs/exec-plans/`、reference band の primary input は本体 docs として固定する
+- `docs/references/*.md` は summary / hub / 補助 guide の層として扱い、band の唯一正本とはみなさない
 - source repo 上でも generated repo 上でも、旧 root execution tree を再導入しない
 - `migration` profile の docs は `docs/migration/` に残すが、実行中の planning artefact は `docs/exec-plans/` に寄せる
 

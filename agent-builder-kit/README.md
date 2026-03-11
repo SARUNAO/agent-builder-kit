@@ -10,14 +10,15 @@ AI コーディング前提の開発フローを初期化する `AGENTS.md` と 
 - `docs-builder.toml` の説明: [docs/DOCS_BUILDER_TOML.md](./docs/DOCS_BUILDER_TOML.md)
 - docs の phase 別メモ: [docs/DOCS_LIFECYCLE.md](./docs/DOCS_LIFECYCLE.md)
 - release gate: [docs/ACCEPTANCE_MATRIX.md](./docs/ACCEPTANCE_MATRIX.md)
-- 設定雛形: [docs-builder.toml.example](./docs-builder.toml.example)
+- 設定ガイド: [docs/DOCS_BUILDER_TOML.md](./docs/DOCS_BUILDER_TOML.md)
 
 ## 最短手順
 1. 新しい repo に `agent-builder-kit/` ディレクトリのまま持ち込む
-2. `docs-builder.toml.example` を repo ルートの `docs-builder.toml` としてコピーして調整する
+2. [docs/DOCS_BUILDER_TOML.md](./docs/DOCS_BUILDER_TOML.md) を見て、repo ルートに `docs-builder.toml` を作成して調整する
 3. `python3 agent-builder-kit/tools/init_runner.py docs-builder.toml` を実行する
 3. 生成された `AGENTS.md`, `docs/`, `docs/exec-plans/plan-spec.md`, `docs/exec-plans/blocks/`, `docs/exec-plans/canvas/` を確認する
-4. `docs/HUMAN_MANUAL.md` を開き、`plan-manager -> task-planner -> task-worker` の順で進める
+4. `docs/exec-plans/active/attention-queue.md` に cluster 名ベースの初期 cleanup reminder が入っていることを確認する
+5. `docs/HUMAN_MANUAL.md` を開き、`plan-manager -> task-planner -> task-worker` の順で進める
 
 ## 人間向けの最短導線
 1. [docs/HUMAN_MANUAL.md](./docs/HUMAN_MANUAL.md) を開く
@@ -73,3 +74,7 @@ AI コーディング前提の開発フローを初期化する `AGENTS.md` と 
   - 新規プロジェクトを bootstrap する
 - `project.mode = "migration"`
   - 既存プロジェクト移行用の `docs/migration/` と `MIGRATION_START_HERE.md` を含めて生成する
+
+## package 内 migration docs の扱い
+- `agent-builder-kit/docs/migration/` は package 自身の self-hosting 履歴 / handoff note であり、generic package canonical の常設 docs とは切り分けて扱う
+- archive 退避先が確定するまでは package 内に保持するが、方針上は package canonical から外して archive へ寄せる前提とする

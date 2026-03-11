@@ -1,3 +1,12 @@
+---
+reference_id: REF-DESIGN
+title: Design
+lane_order: 200
+owner_role: plan_owner
+sync_mode: direct_source
+kind: reference_source
+---
+
 # Design
 
 ## 設計方針
@@ -48,7 +57,8 @@
 - `init_runner` の実装を Python script に固定するか
 
 ## reference summary との分担
-- この file は本体 docs として扱う
-- `docs/references/design.md` は canvas reference band 用の summary view とする
+- この file は reference band の本体 docs として扱う
+- `docs/references/design.md` は optional summary / hub として残してよい
+- summary を残す場合も、canvas band の代替正本にはしない
 - 本体には設計方針、入力、出力、抽象化境界、設計課題を残す
 - summary には短い見取り図だけを置き、仕様全文は持ち込まない

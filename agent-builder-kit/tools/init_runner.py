@@ -905,6 +905,9 @@ def render_human_manual(config: Config) -> str:
 
 
 def render_attention_queue() -> str:
+    seed_path = BUILDER_DOCS / "exec-plans" / "active" / "attention-queue.md"
+    if seed_path.exists():
+        return seed_path.read_text(encoding="utf-8").strip()
     return textwrap.dedent(
         """
         # ATTENTION Queue

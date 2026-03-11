@@ -76,7 +76,7 @@
 8. 初期 `docs/exec-plans/plan-spec.md` と `docs/exec-plans/blocks/`, `docs/exec-plans/chunks/`, `docs/exec-plans/tickets/` の雛形を置く
 9. `.canvas` を初回生成する
 
-generic bootstrap では、package source repo に含まれる queue や progress の現在値をそのまま使わず、空の seed を優先する。
+generic bootstrap では、builder 固有の queue や progress の現在値をそのまま持ち込まず、package docs に置いた cluster 名ベースの static queue seed と空の progress seed を使う。
 builder 自身の履歴を引き継ぐのは `self_hosting_pack` など明示条件のときだけとする。
 
 ## 目立つ入口
@@ -143,7 +143,8 @@ builder 自身の履歴を引き継ぐのは `self_hosting_pack` など明示条
 ## 初回確認ポイント
 - `docs/index.md` から core docs と execution docs に辿れること
 - target contract では `docs/exec-plans/plan-spec.md` と `docs/exec-plans/blocks/` に seed が生成されること
-- `docs/exec-plans/active/attention-queue.md` と `docs/exec-plans/completed/progress-log.md` が空 seed で始まること
+- `docs/exec-plans/active/attention-queue.md` が package docs 正本から読まれた cluster 名ベースの static seed で始まること
+- `docs/exec-plans/completed/progress-log.md` が空 seed で始まること
 - `tools/codex-skills/` に `reviewer` を含む canonical role skill bundle が生成されること
 - `.agents/skills/` に同じ skill bundle が export され、利用者向け入口として読めること
 - code ticket は `task-worker` 後に reviewer を呼び、docs-only ticket は skip 条件を明示して運用できること

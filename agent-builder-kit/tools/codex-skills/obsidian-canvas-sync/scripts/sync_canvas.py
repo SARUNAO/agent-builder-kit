@@ -101,6 +101,24 @@ class ReferenceNote:
     source_path: str | None = None
 
 
+@dataclass(frozen=True)
+class DirectReferenceSpec:
+    reference_id: str
+    title: str
+    lane_order: int
+    doc_path: str
+
+
+DIRECT_REFERENCE_SPECS = (
+    DirectReferenceSpec("REF-PRODUCT-SENSE", "Product Sense", 100, "docs/PRODUCT_SENSE.md"),
+    DirectReferenceSpec("REF-DESIGN", "Design", 200, "docs/DESIGN.md"),
+    DirectReferenceSpec(
+        "REF-ATTENTION", "Attention Queue", 300, "docs/exec-plans/active/attention-queue.md"
+    ),
+    DirectReferenceSpec("REF-HUMAN-MANUAL", "Human Manual", 400, "docs/HUMAN_MANUAL.md"),
+)
+
+
 def parse_args() -> CanvasArgs:
     parser = argparse.ArgumentParser(
         description="Generate or update an Obsidian .canvas from plan/chunk/ticket docs."
@@ -302,24 +320,61 @@ def parse_tickets(ticket_dir: Path | None) -> list[Ticket]:
     return tickets
 
 
-def parse_references(reference_dir: Path | None) -> list[ReferenceNote]:
+def parse_legacy_references(reference_dir: Path | None) -> dict[str, ReferenceNote]:
     if reference_dir is None or not reference_dir.exists():
-        return []
-    references: list[ReferenceNote] = []
+        return {}
+    references: dict[str, ReferenceNote] = {}
     for path in sorted(reference_dir.rglob("*.md")):
         lines = read_markdown(path)
         metadata = parse_metadata(lines)
         reference_id = metadata.get("reference_id", "").strip()
         if not reference_id:
             continue
-        references.append(
-            ReferenceNote(
-                reference_id=reference_id,
-                title=metadata.get("title", "").strip() or first_heading(lines) or reference_id,
-                lane_order=parse_int(metadata.get("lane_order", ""), 100),
-                source_path=str(path),
-            )
+        references[reference_id] = ReferenceNote(
+            reference_id=reference_id,
+            title=metadata.get("title", "").strip() or first_heading(lines) or reference_id,
+            lane_order=parse_int(metadata.get("lane_order", ""), 100),
+            source_path=str(path),
         )
+    return references
+
+
+def parse_references(plan_spec: Path, reference_dir: Path | None) -> list[ReferenceNote]:
+    legacy_references = parse_legacy_references(reference_dir)
+    references: list[ReferenceNote] = []
+    missing: list[str] = []
+    project_root = derive_project_root(plan_spec)
+
+    for spec in DIRECT_REFERENCE_SPECS:
+        primary_path = project_root / spec.doc_path
+        legacy = legacy_references.get(spec.reference_id)
+        if primary_path.exists():
+            lines = read_markdown(primary_path)
+            metadata = parse_metadata(lines)
+            references.append(
+                ReferenceNote(
+                    reference_id=metadata.get("reference_id", "").strip()
+                    or (legacy.reference_id if legacy is not None else spec.reference_id),
+                    title=metadata.get("title", "").strip()
+                    or (legacy.title if legacy is not None else first_heading(lines) or spec.title),
+                    lane_order=parse_int(
+                        metadata.get("lane_order", ""),
+                        legacy.lane_order if legacy is not None else spec.lane_order,
+                    ),
+                    source_path=str(primary_path),
+                )
+            )
+            continue
+        if legacy is not None:
+            references.append(legacy)
+            continue
+        missing.append(spec.doc_path)
+
+    if missing:
+        raise ValueError(
+            "reference band の source docs が見つかりません: " + ", ".join(sorted(missing))
+        )
+
     return sorted(references, key=lambda item: (item.lane_order, item.reference_id))
 
 
@@ -698,6 +753,16 @@ def derive_vault_root(args: CanvasArgs) -> Path:
     return Path(*shared_parts) if shared_parts else args.plan_spec.resolve().parent
 
 
+def derive_project_root(plan_spec: Path) -> Path:
+    resolved = plan_spec.resolve()
+    for parent in resolved.parents:
+        if parent.name == "docs":
+            return parent.parent
+    if len(resolved.parents) >= 3:
+        return resolved.parents[2]
+    return resolved.parent
+
+
 def validate_blocks(blocks: list[Block]) -> None:
     if not blocks:
         raise ValueError("plan-spec に 'High-level blocks' テーブルが見つかりません。")
@@ -740,7 +805,7 @@ def main() -> int:
     attach_block_sources(blocks, args.block_dir)
     chunks = parse_chunks(args.chunk_dir)
     ticket_docs = parse_tickets(args.ticket_dir)
-    references = parse_references(args.reference_dir)
+    references = parse_references(args.plan_spec, args.reference_dir)
     tickets_by_chunk = merge_tickets(chunks, ticket_docs)
     vault_root = derive_vault_root(args)
     validate_blocks(blocks)

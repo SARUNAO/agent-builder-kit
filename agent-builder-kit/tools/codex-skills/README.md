@@ -26,6 +26,11 @@
 
 ## まだ同梱しない support skill
 - `docs-sync`
-  - 役割は summary docs と hub docs の整合補助
+  - 役割は optional summary docs と hub docs の整合補助
   - まだ contract のみで、`SKILL.md` は作成していない
   - 実装する場合は `obsidian_canvas pack` の asset として ship する
+
+## current contract
+- reference band は `direct-source` を前提とし、`Product Sense`, `Design`, `Human Manual`, `Attention Queue` の本体 docs を一次入力として扱う
+- `docs/references/*.md` は残す場合も optional summary / hub として扱い、本体 docs の代替正本にはしない
+- generated attention queue の static seed は docs 正本を前提とし、`AI案内可 / 条件付き / 人間判断必須` の境界を保つ

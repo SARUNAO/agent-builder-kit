@@ -29,8 +29,17 @@ Do not change the human request or the plan goal. If the plan itself needs to ch
 5. 親 block の status 変更は、roll-up 整合のための `pending -> in_progress` 同期だけに限る。
 6. `in_progress -> done`, `blocked`, `goal`, `depends_on`, `lane_order` など block の意味変更は `plan-manager` へ返す。
 7. If chunk/ticket structure or status changed and Obsidian canvas is enabled, run canvas sync at the end.
+8. Treat `Product Sense`, `Design`, `Human Manual`, and `Attention Queue` as the primary inputs for the reference band, and treat `docs/references/*.md` as optional summary or hub docs only when they are intentionally retained.
+9. Keep generated attention queue guidance aligned with the `AI案内可 / 条件付き / 人間判断必須` boundary defined in docs, and do not re-interpret that boundary in chunk or ticket structure.
+
+## Commit Cadence
+- Default cadence is `ticket -> ticket -> ticket -> chunk`.
+- Do not ask for a commit after every worker ticket by default.
+- Prefer suggesting a commit when a chunk has been closed, or when multiple ticket promotions and source-doc sync have been bundled into a coherent checkpoint.
+- Leave early commit prompts to exceptional cases surfaced by `task-worker`, such as large diffs, risky changes, or a pending human review point.
 
 ## Sync Rule
 - Run `obsidian-canvas-sync` only after updating docs/exec-plans/chunks/tickets.
 - Prefer executing `scripts/sync_canvas.py` directly.
 - If schema integrity is broken, fix the docs first and only then sync.
+- If reference-band or queue-guidance docs changed in the same turn, treat primary docs as source of truth and only sync optional summary or hub notes when the ticket explicitly calls for it.
