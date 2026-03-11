@@ -1,0 +1,36 @@
+schema_version = 1
+
+[project]
+name = "project-name"
+slug = "project-name"
+mode = "new"
+request = "ここにやりたいことを書く"
+summary = "プロジェクトの概要"
+primary_deliverable = "docs_tooling_package"
+target_users = ["maintainer", "internal_team"]
+
+[workflow]
+profile = "standard"
+role_model = "four_role_default"
+packs = ["obsidian_canvas_pack"]
+review_required = true
+
+[bootstrap]
+seed_discovery_block = true
+reference_seed = ["product_sense", "design", "attention_queue", "human_manual"]
+
+[obsidian]
+canvas_path = "docs/exec-plans/canvas/development-flow.canvas"
+reference_dir = "docs/references"
+
+[discovery]
+confirmed = []
+assumptions = []
+non_goals = []
+constraints = []
+
+[generation]
+output_root = "."
+planning_root = "docs/exec-plans"
+overwrite_policy = "safe_merge"
+include_examples = false
