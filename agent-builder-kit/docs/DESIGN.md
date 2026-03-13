@@ -56,6 +56,29 @@ kind: reference_source
 - role skill と validator をどこまで builder 出力へ含めるか
 - `init_runner` の実装を Python script に固定するか
 
+## `conductor` backport の境界
+- generic な orchestration asset を同梱する場合、runtime asset の正本は `tools/conductor/` を新設して置く
+- 想定する対象は `flow_conductor.py`, `run_conductor.sh`, `add_operator_request.sh`, 及びそれを説明する契約 docs / skill docs に限る
+- skill 本文の正本は引き続き `tools/codex-skills/` に置き、`conductor` を追加する場合も `tools/codex-skills/conductor/SKILL.md` を使う
+- 特定 project の記事化用記録機構、tutorial 本文、validation の生ログは package の共通骨格へ含めない
+- package 現行段階では runtime asset の同梱を先行し、generated repo への export と合わせて skill docs を段階導入してよい
+
+## bounded multi-step と mirror gate
+- package 側 `conductor` は same-block bounded multi-step を generic contract として同梱する
+- `execution_level` は `MID` と `HIGH` の 2 段だけを許し、既定値は `MID`
+- step 上限の既定値は `5` とし、human が明示した practical override だけを受ける
+- `step=20` は bounded override の一例であり、無制限実行を意味しない
+- `MID` は package 利用者向けの既定 level として読む
+  - same-block bounded multi-step に加え、block-only 状態から次 block の chunk / ticket 生成へ進む narrow handoff までを含む
+- `HIGH` はその `MID` を含んだ上位 level として読み、block close-ready 段階では `plan_manager` 返送を優先する
+- reviewer handoff は direct dispatch target ではなく、bounded run 内の internal role として扱う
+- machine-readable には `close_ready_handoff`, `high_cross_block_handoff`, `reviewer_pass_through` を載せ、wrapper note でも人間が読み分けられるようにする
+- `.agents/skills/` mirror は package canonical source と package docs の validation 完了後に追随させる
+- したがって設計上の順番は次で固定する
+  - `tools/conductor/` と `tools/codex-skills/` を更新する
+  - package docs だけで contract が閉じるか validation する
+  - その後に generated repo と mirror へ反映する
+
 ## reference summary との分担
 - この file は reference band の本体 docs として扱う
 - `docs/references/design.md` は optional summary / hub として残してよい

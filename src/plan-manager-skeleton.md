@@ -61,8 +61,8 @@ docs/exec-plans/canvas/development-flow.canvas も再同期済みです。
 ## `.canvas` によるフローの視覚化
 
 `agent-builder-kit` には、現在の docs の内容を汲み取って開発フローを視覚化する `obsidian-canvas-sync` が組み込まれています。
-このSkillを明示的に呼び出す必要はありません。
-`plan-manager` や `task-planner`, `task-worker` がその仕事を終えると、自動的にこの Skill を呼び出し、`.canvas` ファイルを更新します。
+`plan-manager` や `task-planner`, `task-worker` がその仕事を終えると、自動的にスクリプトを呼び出し現在のタスクの進捗を拾い上げて`.canvas` ファイルを更新します。
+Skillとして明示的に呼び出すこともできます。
 
 Obsidianで`docs/exec-plans/canvas/development-flow.canvas`を開き、進捗フローをリアルタイムに確認しながら開発業務を進めることができます。
 

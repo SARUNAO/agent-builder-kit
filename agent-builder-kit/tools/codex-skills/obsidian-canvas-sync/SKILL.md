@@ -54,6 +54,14 @@ If the project intentionally keeps those notes and these fields are missing, sto
 - Do not treat generator code strings or legacy summary notes as higher priority than the docs contract.
 
 ## Script Usage
+既定配置の repo では、引数なし実行を first choice とする。
+
+```bash
+python3 .agents/skills/obsidian-canvas-sync/scripts/sync_canvas.py
+```
+
+override が必要なときだけ、明示引数を足す。
+
 ```bash
 python3 .agents/skills/obsidian-canvas-sync/scripts/sync_canvas.py \
   --plan-spec docs/exec-plans/plan-spec.md \
@@ -65,7 +73,13 @@ python3 .agents/skills/obsidian-canvas-sync/scripts/sync_canvas.py \
   --canvas docs/exec-plans/canvas/development-flow.canvas
 ```
 
+一部だけ explicit path を渡した場合でも、未指定の `block-dir`, `chunk-dir`, `ticket-dir`, `reference-dir`, `canvas` は同じ repo / fixture root から補完される前提で読む。current workspace 側の default path を混ぜない。
+
 `.agents/skills/` が存在しない repo では、同じ script を `tools/codex-skills/obsidian-canvas-sync/scripts/sync_canvas.py` から実行してよい。
+
+```bash
+python3 tools/codex-skills/obsidian-canvas-sync/scripts/sync_canvas.py
+```
 
 ```bash
 python3 tools/codex-skills/obsidian-canvas-sync/scripts/sync_canvas.py \

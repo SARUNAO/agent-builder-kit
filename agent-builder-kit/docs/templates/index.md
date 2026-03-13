@@ -6,6 +6,7 @@
 - [block-note-template.md](./block-note-template.md)
 - [chunk-sheet-template.md](./chunk-sheet-template.md)
 - [ticket-template.md](./ticket-template.md)
+- [operator-request-template.md](./operator-request-template.md)
 - [fact-report-template.md](./fact-report-template.md)
 - [chunk-close-template.md](./chunk-close-template.md)
 - [project-inventory-template.md](./project-inventory-template.md)

@@ -30,6 +30,12 @@
 - `task-worker` は code ticket 完了後に `reviewer` へ handoff する前提で配る
 - markdown / docs 主体 ticket は docs-only skip を許すが、skip 条件は runtime docs に明示して使う
 
+## `conductor` backport 後の bootstrap / export
+- `conductor` を package へ同梱する場合、skill 正本は `tools/codex-skills/conductor/`、runtime asset 正本は `tools/conductor/` を使う
+- `init_runner` は generated repo 作成時に、skill docs の export だけでなく、必要な runtime asset も生成先へ複製する前提で扱う
+- generated repo では利用者向け入口として `.agents/skills/` を出力してよいが、package 自体は `tools/` 配下の canonical source を正本とする
+- current repo 固有の `docs/article-instrumentation/` や tutorial 本文は bootstrap 対象に含めない
+
 ## 持たせるもの
 - `AGENTS.md`
 - `README.md`
@@ -70,6 +76,7 @@
    - code review 用の `reviewer` も canonical asset として配置する
    - package asset の正本は `tools/codex-skills/` に置く
    - generated repo では利用者向け export として `.agents/skills/` へ mirror する
+   - `conductor` を同梱する場合は、skill docs を `tools/codex-skills/conductor/`、runtime asset を `tools/conductor/` から出力する
 5. `docs/exec-plans/` と `docs/PLANS.md` を空の generic seed へ初期化する
 6. `docs/references/` の seed を生成する
 7. `project.mode = "migration"` のときは `docs/migration/` を生成し、現行 AI 向け依頼文も置く
@@ -192,6 +199,7 @@ builder 自身の履歴を引き継ぐのは `self_hosting_pack` など明示条
 - 利用入口:
   - `README.md`
   - `docs/DOCS_BUILDER_TOML.md`
+- `conductor` backport 後の検証では、package canonical source を更新したうえで `python3 agent-builder-kit/tools/init_runner.py docs-builder.toml` のような package 起点の bootstrap を再度確認する
 - migration pack 有効時:
   - `MIGRATION_START_HERE.md`
   - `docs/migration/index.md`

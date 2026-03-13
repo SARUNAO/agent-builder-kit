@@ -167,6 +167,17 @@
 - reference band の正契約は本体 docs の direct-source とする
 - source docs は `docs/exec-plans/plan-spec.md`, `docs/exec-plans/chunks/*.md`, `docs/exec-plans/tickets/*.md` を使う
 - optional summary / hub docs を残す場合だけ `docs/references/*.md` を読む
+- `sync_canvas.py` は current repo の既定配置なら引数なしで上記 path を自動解決してよい
+- 引数なし実行では、current workspace から repo root を見つけ、その root 配下の既定 path を使う
+- `--plan-spec`, `--block-dir`, `--chunk-dir`, `--ticket-dir`, `--reference-dir`, `--canvas` のいずれかを明示したときは、その explicit path を含む repo root を基準に、未指定の残り path を解決する
+- explicit path を 1 つでも渡した状態で current workspace 側の default path を混ぜてはいけない
+- 明示引数は override 用であり、default path を壊したくない通常運用では省略を優先してよい
+
+## no-arg / explicit path の使い分け
+- current repo や package repo の通常運用では、引数なし実行を first choice にしてよい
+- temp fixture や別 repo copy を使う検証では、最低でも `--plan-spec` を明示する
+- その場合、`--chunk-dir` や `--ticket-dir` を省略しても、同じ fixture / repo root 配下の default path が補完される前提で読む
+- fixture の `--plan-spec` だけを渡して current workspace の `chunks/` や `tickets/` を暗黙に混ぜる動きは bug として扱う
 
 ## reference band の更新責務
 - `docs/PRODUCT_SENSE.md`

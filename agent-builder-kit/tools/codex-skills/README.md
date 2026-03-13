@@ -4,6 +4,7 @@
 
 ## 現在同梱している skill
 - `plan-manager`
+- `conductor`
 - `task-planner`
 - `task-worker`
 - `reviewer`
@@ -20,9 +21,15 @@
 ## canonical 名
 - canonical:
   - `plan-manager`
+  - `conductor`
   - `task-planner`
   - `task-worker`
   - `reviewer`
+
+## `conductor` runtime asset
+- package 側では `tools/conductor/` に `flow_conductor.py`, `run_conductor.sh`, `add_operator_request.sh` を置く
+- skill 本文の正本は `tools/codex-skills/conductor/` に置く
+- generated repo では、必要なら `.agents/skills/` mirror と runtime asset の両方を出力する
 
 ## まだ同梱しない support skill
 - `docs-sync`

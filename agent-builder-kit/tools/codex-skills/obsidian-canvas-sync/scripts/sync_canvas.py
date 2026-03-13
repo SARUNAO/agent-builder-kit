@@ -118,30 +118,88 @@ DIRECT_REFERENCE_SPECS = (
     DirectReferenceSpec("REF-HUMAN-MANUAL", "Human Manual", 400, "docs/HUMAN_MANUAL.md"),
 )
 
+DEFAULT_PLAN_SPEC = Path("docs/exec-plans/plan-spec.md")
+DEFAULT_BLOCK_DIR = Path("docs/exec-plans/blocks")
+DEFAULT_CHUNK_DIR = Path("docs/exec-plans/chunks")
+DEFAULT_TICKET_DIR = Path("docs/exec-plans/tickets")
+DEFAULT_REFERENCE_DIR = Path("docs/references")
+DEFAULT_CANVAS = Path("docs/exec-plans/canvas/development-flow.canvas")
+
 
 def parse_args() -> CanvasArgs:
     parser = argparse.ArgumentParser(
         description="Generate or update an Obsidian .canvas from plan/chunk/ticket docs."
     )
-    parser.add_argument("--plan-spec", required=True, type=Path)
+    parser.add_argument("--plan-spec", type=Path)
     parser.add_argument("--block-dir", type=Path)
     parser.add_argument("--chunk-dir", type=Path)
     parser.add_argument("--ticket-dir", type=Path)
     parser.add_argument("--reference-dir", type=Path)
-    parser.add_argument("--canvas", required=True, type=Path)
+    parser.add_argument("--canvas", type=Path)
     parser.add_argument("--manual-lane-x", type=int, default=DEFAULT_MANUAL_LANE_X)
     parser.add_argument("--vault-root", type=Path)
     ns = parser.parse_args()
+    project_root = resolve_project_root(
+        [
+            ns.plan_spec,
+            ns.block_dir,
+            ns.chunk_dir,
+            ns.ticket_dir,
+            ns.reference_dir,
+            ns.canvas,
+        ]
+    )
+    plan_spec = resolve_input_path(ns.plan_spec, project_root, DEFAULT_PLAN_SPEC)
+    block_dir = resolve_input_path(ns.block_dir, project_root, DEFAULT_BLOCK_DIR)
+    chunk_dir = resolve_input_path(ns.chunk_dir, project_root, DEFAULT_CHUNK_DIR)
+    ticket_dir = resolve_input_path(ns.ticket_dir, project_root, DEFAULT_TICKET_DIR)
+    reference_dir = resolve_input_path(ns.reference_dir, project_root, DEFAULT_REFERENCE_DIR)
+    canvas = resolve_input_path(ns.canvas, project_root, DEFAULT_CANVAS)
     return CanvasArgs(
-        plan_spec=ns.plan_spec,
-        block_dir=ns.block_dir,
-        chunk_dir=ns.chunk_dir,
-        ticket_dir=ns.ticket_dir,
-        reference_dir=ns.reference_dir,
-        canvas=ns.canvas,
+        plan_spec=plan_spec,
+        block_dir=block_dir,
+        chunk_dir=chunk_dir,
+        ticket_dir=ticket_dir,
+        reference_dir=reference_dir,
+        canvas=canvas,
         manual_lane_x=ns.manual_lane_x,
         vault_root=ns.vault_root,
     )
+
+
+def resolve_cli_path(path: Path) -> Path:
+    return path if path.is_absolute() else (Path.cwd() / path).resolve()
+
+
+def resolve_project_root(explicit_paths: list[Path | None]) -> Path:
+    explicit_candidates = [resolve_cli_path(item) for item in explicit_paths if item is not None]
+    if explicit_candidates:
+        search_roots = [path if path.is_dir() else path.parent for path in explicit_candidates]
+    else:
+        search_roots = [Path.cwd(), Path(__file__).resolve()]
+
+    seen: set[Path] = set()
+    for start in search_roots:
+        current = start if start.is_dir() else start.parent
+        for candidate in (current, *current.parents):
+            if candidate in seen:
+                continue
+            seen.add(candidate)
+            if (candidate / DEFAULT_PLAN_SPEC).exists():
+                return candidate
+    if explicit_candidates:
+        first = explicit_candidates[0]
+        return first.parent if first.is_file() else first
+    raise SystemExit(
+        "default path を解決できません。repo root から実行するか、"
+        "--plan-spec / --canvas を明示してください。"
+    )
+
+
+def resolve_input_path(value: Path | None, project_root: Path, default_relative: Path) -> Path:
+    if value is None:
+        return project_root / default_relative
+    return resolve_cli_path(value)
 
 
 def read_markdown(path: Path) -> list[str]:

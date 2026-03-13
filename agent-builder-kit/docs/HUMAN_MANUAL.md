@@ -33,6 +33,40 @@ kind: reference_source
 4. `task-planner` に chunk / ticket を切ってもらう
 5. `exec-plans/canvas/development-flow.canvas` を見ながら `task-worker` に進めてもらう
 
+## `conductor` backport 後の見方
+- `conductor` runtime asset を同梱したあとは、script 実体を `tools/conductor/`、skill 本文を `tools/codex-skills/conductor/` のように分けて見る
+- package の canonical source を更新したあと、generated repo へどのように届くかの手順は `INIT_RUNNER.md` を正本として確認する
+- generated repo では利用者向け入口が `.agents/skills/` に mirror されることがあるが、package 自身の正本配置は引き続き `tools/` 配下で確認する
+
+## backport 後の確認順
+1. `tools/conductor/` に runtime asset がそろっているかを見る
+2. `tools/codex-skills/` に `conductor` を含む skill docs があるかを見る
+3. `INIT_RUNNER.md` の bootstrap / export 手順どおりに generated repo へ反映されるか確認する
+4. generated repo では `.agents/skills/` の mirror と runtime asset の配置が崩れていないかを見る
+
+## `conductor` を package 単体で使うときの読み方
+- `conductor` は same-block bounded multi-step を正として使う
+- 既定値は `LEVEL=MID step=5`
+- override が必要なら、自然文より次の準正規形を優先して書く
+  - `LEVEL=MID step=5`
+  - `LEVEL=HIGH step=20`
+- `HIGH` や大きい step を指定しても無制限にはならない
+  - hard stop
+  - `plan_manager` 返送
+  - reviewer handoff 必須
+  - active block 変更
+  - 実効 step 上限到達
+  で止まる
+- `MID` は package 利用者向けの既定 level として読む
+  - active ticket / chunk がある間は same-block bounded multi-step を進める
+  - active block だけが残り、次に必要なのが chunk / ticket 生成なら `task_planner` への narrow handoff も含めてよい
+- `HIGH` はその `MID` を含んだ上位 level として読む
+  - block close-ready 段階では `plan_manager` 返送を優先する
+- code ticket 後段の reviewer は direct target ではなく internal role として扱う
+  - no-findings path: `reviewer_pass_through.triggered = true`
+  - finding あり path: `reviewer_pass_through.blocking = true`, `next_role = task_worker`
+- `.agents/skills/` が存在しても export mirror として扱い、正本確認は `tools/codex-skills/` と `tools/conductor/` を優先する
+
 ## 人間が最終判断すること
 - 何を作るか、何を作らないか
 - 優先順位

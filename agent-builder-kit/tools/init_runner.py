@@ -24,6 +24,7 @@ BUILDER_DOCS = ROOT / "docs"
 PLANNING_TEMPLATES = BUILDER_DOCS / "templates"
 WORKFLOW_REFERENCES = BUILDER_DOCS / "references"
 SKILLS_ROOT = ROOT / "tools" / "codex-skills"
+CONDUCTOR_ROOT = ROOT / "tools" / "conductor"
 
 DEFAULT_REFERENCE_SEED = ["product_sense", "design", "attention_queue", "human_manual"]
 REFERENCE_SEED_MAP = {
@@ -335,6 +336,7 @@ def main() -> int:
     generated.extend(generate_core_docs(config))
     copied.extend(copy_references(config))
     copied.extend(copy_skills(config))
+    copied.extend(copy_runtime_assets(config))
     copied.extend(copy_templates(config))
     copied.extend(copy_self_hosting_assets(config))
     generated.extend(generate_runtime_seed(config))
@@ -380,6 +382,7 @@ def ensure_dirs(config: Config) -> None:
         config.output_root / "docs",
         config.output_root / "docs" / "references",
         config.output_root / "tools",
+        config.output_root / "tools" / "conductor",
         config.output_root / "tools" / "codex-skills",
         config.planning_root,
         config.active_dir,
@@ -449,6 +452,7 @@ def copy_references(config: Config) -> list[str]:
 def copy_skills(config: Config) -> list[str]:
     copied: list[str] = []
     skills = [
+        "conductor",
         "plan-manager",
         "task-planner",
         "task-worker",
@@ -475,6 +479,17 @@ def copy_skills(config: Config) -> list[str]:
     return copied
 
 
+def copy_runtime_assets(config: Config) -> list[str]:
+    copied: list[str] = []
+    runtime_trees = [
+        (CONDUCTOR_ROOT, config.output_root / "tools" / "conductor"),
+    ]
+    for src, dst in runtime_trees:
+        if src.exists() and copy_tree(src, dst, config.overwrite):
+            copied.append(str(dst))
+    return copied
+
+
 def copy_templates(config: Config) -> list[str]:
     if config.profile not in {"standard", "expanded"}:
         return []
@@ -484,6 +499,7 @@ def copy_templates(config: Config) -> list[str]:
         "plan-spec-template.md",
         "chunk-sheet-template.md",
         "ticket-template.md",
+        "operator-request-template.md",
         "fact-report-template.md",
         "chunk-close-template.md",
     ]

@@ -1,6 +1,6 @@
 # Operational Schema
 
-この docs は、builder が初期生成した後に、`プランオーナー`、`タスクプランナー`、`タスクワーカー + reviewer` が日々更新する運用上の正本 schema を定義する。
+この docs は、builder が初期生成した後に、`プランオーナー`、`タスクプランナー`、`タスクワーカー + reviewer`、`conductor` が従う運用上の正本 schema を定義する。
 
 ## 目的
 - `.canvas` の手前にある source of truth を固定する
@@ -18,6 +18,8 @@
   - `docs/exec-plans/tickets/*.md`
 - fact-report の正本:
   - `docs/exec-plans/fact-reports/*.md`
+- operator request の正本:
+  - `docs/exec-plans/operator-requests/*.md`
 - human-facing reference の補助 / summary docs:
   - `docs/references/*.md`
 - reference band の本体 docs:
@@ -32,6 +34,55 @@
 
 `docs/references/*.md` は補助 summary / hub docs の正本として扱ってよいが、`Product Sense`, `Design`, `Human Manual`, `Attention Queue` の reference band は本体 docs を直接入力として扱う前提で設計する。summary note を残す場合も従属 docs として扱い、band integrity の唯一条件にはしない。
 
+## skill asset の canonical boundary
+- skill asset の canonical source:
+  - `tools/codex-skills/`
+- user-facing export mirror:
+  - `.agents/skills/`
+- runtime asset の canonical source:
+  - `tools/conductor/`
+- ルール:
+  - package docs の source of truth は `tools/codex-skills/` と `tools/conductor/` を先に読む
+  - `.agents/skills/` は利用者向け mirror であり、source of truth ではない
+  - mirror は package canonical source と docs の validation 完了後にだけ追随させる
+
+## bounded multi-step と level / step override contract
+- `conductor` は same-block bounded multi-step を正とする
+  - 既定 `execution_level`: `MID`
+  - 既定 `max_steps_per_run`: `5`
+- human が明示 override を渡す場合は、次の準正規形を優先する
+  - `LEVEL=MID step=5`
+  - `LEVEL=HIGH step=20`
+- `HIGH` や大きい step を指定しても、次の stop 境界は維持する
+  - `stop_reason != null`
+  - `dispatchable = false`
+  - `route_hint = plan_manager`
+  - reviewer handoff 必須
+  - active block 変更
+  - 実効 step 上限到達
+- `step=20` は practical override であり、無制限実行を意味しない
+- `MID` は package 利用者向けの既定 level として読む
+  - active ticket / chunk がある間は same-block bounded multi-step を進める
+  - active block だけが残り、次に必要なのが chunk / ticket 生成なら `task_planner` への narrow handoff も含めてよい
+- `HIGH` はその `MID` を含んだ上位 level として読み、block close-ready 段階では `plan_manager` 返送を優先する
+
+## HIGH cross-block / reviewer pass-through contract
+- block-only 状態から次 block の chunk / ticket 生成へ進む narrow handoff は `MID` 以上で許す
+- ただし block close-ready 段階では execution level に関わらず `plan_manager` 返送を優先する
+- `HIGH` でも次は許さない
+  - block goal / depends_on / lane_order の自動変更
+  - block 複数本の無制限横断
+  - hard stop や `plan_manager` 境界の無効化
+- reviewer handoff は direct dispatch target ではなく、bounded run 内の internal role としてだけ扱う
+  - finding 0 件なら bounded run は継続候補に残る
+  - unresolved finding があるなら `task_worker` 返送の blocking 境界になる
+- machine-readable には少なくとも次が読める必要がある
+  - `close_ready_handoff`
+  - `high_cross_block_handoff`
+  - `reviewer_pass_through`
+  - `execution_level`
+  - `max_steps_per_run`
+
 ## 移行中の互換 path
 - source-of-truth はすでに `docs/exec-plans/` と `docs/references/` へ移した
 - 旧 `planning/` や root `blocks/`, `chunks/`, `tickets/`, `canvas/`, `references/` は現行 source repo では使わない
@@ -44,6 +95,8 @@
   - block を実行可能単位へ分解した統合単位
 - `ticket`
   - ワーカーが独立して完了できる最小単位
+- `operator_request`
+  - loop 実行中に人間が次の安全境界で差し込みたい要求
 
 ## ownership
 
@@ -58,6 +111,7 @@
   - `lane_order`
 - 例外:
   - `タスクプランナー` は、配下最初の `chunk` を `in_progress` に上げる瞬間に限り、親 `block` の `pending -> in_progress` 同期だけ行ってよい
+  - 同期時は block の正本である `docs/exec-plans/plan-spec.md` の block table と、補助 note である `docs/exec-plans/blocks/*.md` の両方を更新する
   - この例外は roll-up 整合のための status 同期だけに限る
   - `in_progress -> done`, `blocked`, `goal`, `depends_on`, `lane_order` は引き続き `プランオーナー` が判断する
 
@@ -85,11 +139,30 @@
   - `lane_order`
   - `fact-report` への参照
 
+### `operator_request`
+- 主担当:
+  - `タスクプランナー`
+- 起票:
+  - `Human operator`
+- 参照:
+  - `conductor`
+- 更新してよいもの:
+  - `status`
+  - `requested_role`
+  - `target_scope`
+  - `related_refs`
+
 ## status の許可値
 - `pending`
 - `in_progress`
 - `done`
 - `blocked`
+- `obsolete`
+
+## operator request status の許可値
+- `pending`
+- `acknowledged`
+- `resolved`
 - `obsolete`
 
 ## state transition
@@ -118,6 +191,14 @@
   - `blocked -> in_progress`
   - `pending -> obsolete`
 
+### `operator_request`
+- 許可:
+  - `pending -> acknowledged`
+  - `pending -> resolved`
+  - `pending -> obsolete`
+  - `acknowledged -> resolved`
+  - `acknowledged -> obsolete`
+
 ## roll-up rules
 - `block = done`
   - 配下 `chunk` はすべて `done`
@@ -142,8 +223,7 @@
   - `タスクワーカー + reviewer` が `Done チェック`、review 結果、`fact-report` を揃える
   - `タスクプランナー` が source docs sync を確認して `status = done` へ昇格させる
 - `chunk`
-  - `タスクプランナー` が `Done チェック` と chunk close 材料を揃える
-  - `プランオーナー` が docs sync を確認して `status = done` へ昇格させる
+  - `タスクプランナー` が `Done チェック`、chunk close 材料、source docs sync を確認して `status = done` へ昇格させる
 - `block`
   - `プランオーナー` が `Done チェック` と配下整合を確認し、`status = done` へ昇格させる
 
@@ -241,6 +321,31 @@ kind: reference
 
 ## role ごとの更新境界
 
+### `conductor`
+- 読み取り対象:
+  - `docs/exec-plans/plan-spec.md`
+  - `docs/exec-plans/blocks/*.md`
+  - `docs/exec-plans/chunks/*.md`
+  - `docs/exec-plans/tickets/*.md`
+  - `docs/exec-plans/operator-requests/*.md`
+- 出力:
+  - stdout JSON
+  - 必要なら `--human` option または wrapper による summary
+- runtime asset の canonical source:
+  - `tools/conductor/flow_conductor.py`
+  - `tools/conductor/run_conductor.sh`
+  - `tools/conductor/add_operator_request.sh`
+- 責務:
+  - serial phase の ready / blocked / running / done を集約する
+  - pending operator request があるかを確認する
+  - `promotion_candidates`, `sync_warnings`, `table_frontmatter_mismatches` などの機械的な整合検知を返す
+  - same-block bounded auto では `task_worker` と `task_planner` の往復だけを許す
+- やらないこと:
+  - source docs の更新
+  - `.canvas` の更新
+  - operator request の ack / resolve
+  - ticket / chunk / block の最終裁定
+
 ### `プランオーナー`
 - 更新対象:
   - `docs/exec-plans/project-intake.md`
@@ -270,6 +375,7 @@ kind: reference
 - `chunk` を `done` にする前の `Done チェック` と docs sync 準備を持つ
 - 各 ticket 完了時に、追加の chunk / ticket / block が必要かを再判定する
 - `docs/exec-plans/active/attention-queue.md` を更新した場合は、残している `docs/references/attention-queue.md` の summary / hub の追従要否を判断する
+- pending `operator_request` を一次受けし、chunk / ticket 追加で閉じられるかを判定する
 - やらないこと:
   - 人間要求の再解釈
   - plan の目的変更
@@ -294,7 +400,8 @@ kind: reference
 - `タスクワーカー + reviewer` が ticket status を変えたとき
 - reference band の本体 docs、active attention、または補助 `docs/references/*.md` を更新したとき
 
-上記のいずれでも、最後に `obsidian-canvas-sync` を実行して `.canvas` を再同期する。
+上記のうち block / chunk / ticket / reference band に影響する更新では、最後に `obsidian-canvas-sync` を実行して `.canvas` を再同期する。
+ただし operator request だけを `ack / resolve / obsolete` にした更新は `.canvas` sync を必須にしない。
 
 ## validation rule
 - `block_id`, `chunk_id`, `ticket_id` は一意

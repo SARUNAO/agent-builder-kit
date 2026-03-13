@@ -9,6 +9,7 @@
 
 ## skill 一覧
 - `plan-manager`
+- `conductor`
 - `task-planner`
 - `task-worker`
 - `reviewer`
@@ -18,6 +19,7 @@
 ## canonical 名
 - canonical 名:
   - `plan-manager`
+  - `conductor`
   - `task-planner`
   - `task-worker`
   - `reviewer`
@@ -25,8 +27,10 @@
 
 ## 実行モデル
 - role skill は source docs を更新する主担当
+- `conductor` は source docs を読んで next role と機械的な同期候補を返し、package の human-facing entry では bounded multi-step で downstream role を進めてよい orchestration role
 - `obsidian-canvas-sync` は末尾の同期担当
 - role skill が更新を終えたら、同ターンの最後に canvas sync を呼ぶ
+- `conductor` 自身は source docs を更新しないので canvas sync の主担当にはならない
 
 ## skill asset の置き場
 - canonical source:
@@ -39,6 +43,13 @@
   - generated repo で `.agents/skills/` が存在する場合、利用者はそちらを入口として読んでよい
   - ただし `.agents/skills/` は export mirror であり、source of truth ではない
   - `.agents/skills/` が未生成の profile / phase では `tools/codex-skills/` を読む
+
+## `conductor` 同梱時の配置原則
+- `conductor` を package へ同梱する場合、skill 本文の正本は `tools/codex-skills/conductor/` に置く
+- `flow_conductor.py`, `run_conductor.sh`, `add_operator_request.sh` のような runtime asset は `tools/conductor/` に置き、skill から参照する
+- generated repo 側へ export するときも skill と runtime asset の境界は維持する
+- project 固有の article instrumentation や tutorial 本文は package へ含めない
+- package では skill docs と runtime asset の両方を同梱し、generated repo へも同じ境界で export する
 
 ## `docs-sync` support skill の位置づけ
 - `docs-sync` は、role skill が意味判断を終えたあとの docs 整合だけを扱う補助 skill とする
@@ -74,6 +85,34 @@
 
 ## orchestration rule
 
+### `conductor`
+1. `docs/exec-plans/plan-spec.md`, `docs/exec-plans/blocks/*.md`, `docs/exec-plans/chunks/*.md`, `docs/exec-plans/tickets/*.md`, `docs/exec-plans/operator-requests/*.md` を読む
+2. serial phase の ready / blocked / running / done を集約する
+3. pending operator request があるかを確認する
+4. pending request があれば、次の ticket を自動起動せず `task-planner` を返す
+5. `promotion_candidates`, `sync_warnings`, `table_frontmatter_mismatches` のような機械的な整合検知を返す
+6. stdout JSON を canonical output とし、必要なら human summary は wrapper で出す
+7. `reviewer_pass_through.triggered = true` かつ `blocking = false` なら、bounded run の internal role として `reviewer` を先に通してよい
+8. それ以外で `dispatchable = true` かつ `route_hint` が `task_worker` / `task_planner` のときだけ、bounded multi-step で downstream role を継続してよい
+9. `route_hint = plan_manager`、hard stop、`reviewer_pass_through.blocking = true`、active block 変更、step 上限到達でその turn を止める
+9. source docs や `.canvas` は更新しない
+
+#### package public level の読み方
+- `MID` は package 利用者向けの既定 level として扱う
+  - same-block bounded multi-step を進める
+  - active block だけが残り、次に必要なのが chunk / ticket 生成なら `task_planner` への narrow handoff も含めてよい
+- `HIGH` はその `MID` を含んだ上位 level として扱う
+  - block close-ready 段階では `plan_manager` 返送を優先する
+  - `step=20` のような practical override を伴っても hard stop や reviewer handoff は無効化しない
+- `close_ready_handoff` は runtime の `next_role` を正として読む
+  - ticket / chunk close-ready なら `task_planner`
+  - block close-ready なら `plan_manager`
+
+#### package 同梱済みの runtime asset
+- `python3 tools/conductor/flow_conductor.py`
+- `bash tools/conductor/run_conductor.sh --human`
+- `bash tools/conductor/add_operator_request.sh --summary "要望"`
+
 ### `plan-manager`
 1. `docs/exec-plans/project-intake.md`, `docs/exec-plans/discovery-brief.md`, `docs/exec-plans/plan-spec.md`, `docs/exec-plans/blocks/*.md` を読む
 2. 上流判断を更新する
@@ -105,13 +144,15 @@
 1. `docs/exec-plans/plan-spec.md` と `docs/exec-plans/blocks/*.md` を読む
 2. `docs/exec-plans/chunks/*.md`, `docs/exec-plans/tickets/*.md` を更新する
 3. 配下最初の `chunk` を `in_progress` に上げるときだけ、親 `block` の `pending -> in_progress` を同期してよい
-4. chunk / ticket の親子関係、順序、`Done チェック` を反映する
-5. ticket を `done` に上げる前に ticket / fact-report / chunk table の同期を確認する
-6. ticket 完了ごとに、追加の chunk / ticket / block が必要かを必ず再判定する
-7. block の `done`, `blocked`, `goal`, `depends_on`, `lane_order` 変更が必要なら `plan-manager` へ返す
-8. 必要な ticket `done` 昇格と chunk handoff を反映する
-9. `obsidian-canvas-sync` を実行する
-10. `docs/exec-plans/active/attention-queue.md` を更新した場合は、残している optional summary / hub docs の追従要否も判断する
+4. 上記同期を行うときは、`docs/exec-plans/plan-spec.md` の block table と `docs/exec-plans/blocks/*.md` の block note を両方更新する
+5. chunk / ticket の親子関係、順序、`Done チェック` を反映する
+6. ticket を `done` に上げる前に ticket / fact-report / chunk table の同期を確認する
+7. ticket 完了ごとに、追加の chunk / ticket / block が必要かを必ず再判定する
+8. close 条件を満たした chunk は、自分で `status = done` に上げてよい
+9. block の `done`, `blocked`, `goal`, `depends_on`, `lane_order` 変更が必要なら `plan-manager` へ返す
+10. 必要な ticket `done` 昇格と chunk handoff を反映する
+11. `obsidian-canvas-sync` を実行する
+12. `docs/exec-plans/active/attention-queue.md` を更新した場合は、残している optional summary / hub docs の追従要否も判断する
 
 ### `task-worker`
 1. 対象 ticket と関連 chunk を読む
@@ -133,6 +174,9 @@
 ## reviewer handoff rule
 - 原則:
   - コード編集がある ticket は `task-worker` のあとに `reviewer` を呼ぶ
+- `conductor` が bounded run を扱うときは、`reviewer_pass_through` を machine-readable boundary として読む
+  - no-findings path: same-turn bounded run の継続候補
+  - unresolved findings path: `task_worker` 返送の blocking 境界
 - skip を許す条件:
   - markdown / docs 更新のみ
   - 設定値や文言の変更で、コードパスや命名、フォールバックを増やしていない
@@ -196,6 +240,10 @@ reviewer 分離は contract 定義、asset 実装、bootstrap 反映まで閉じ
 - `.agents/skills/` は利用者向け export 層として定義する
 - generated repo で `.agents/skills/` が存在する場合は入口をそちらへ寄せてよい
 - ただし source repo / package docs / bootstrap contract の正本は引き続き `tools/codex-skills/` に置く
+
+## `TICKET-037` 時点の決定
+- `conductor` の runtime asset は package 側 `tools/conductor/` に同梱する
+- package docs では `conductor` の責務と runtime asset の呼び方を先に説明し、skill 本文の配布は generated repo への導線と合わせて段階導入してよい
 
 ## `TICKET-022` 時点の決定
 - reference band は `direct-source` を正契約とし、summary note は optional な従属 docs として扱う
