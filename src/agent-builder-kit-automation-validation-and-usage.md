@@ -1,4 +1,4 @@
-# 検証と使い方
+# conductor の使い方と検証結果
 
 このチャプターで最初に知ってほしいのは、「いま自分がどう使えばよいか」です。  
 検証結果はその裏付けとして扱い、まずは daily use の形から説明します。
@@ -122,25 +122,15 @@ queue を使った差し込み要求も、想定どおり機能しました。
 
 ## `MID/HIGH` と `step` の override で分かったこと
 
-override を入れたあとに確認したのは次の 3 点です。
+override を入れたあとに確認したのは次の 2 点です。
 
-- default は `MID / 5`
-- `HIGH / 20` で bounded override が有効になる
-- それでも hard stop は override より優先される
-
-ここで重要なのは、`HIGH / 20` を入れても unlimited 実行にはならないことです。  
-hard stop、reviewer blocking、`plan_manager` 境界、step 上限があれば必ず止まります。
+- default の `MID / 5` が日常運用の既定として十分使える
+- `HIGH / 20` にしても hard stop や reviewer blocking の境界は越えない
 
 ## reviewer pass-through で分かったこと
 
-reviewer pass-through は、no-findings path と blocking path で挙動がはっきり分かれました。
-
-- no-findings path
-  - `task-worker -> reviewer -> task-planner`
-- blocking finding
-  - reviewer 境界で止まる
-
-この差が見えたことで、「reviewer を毎回人間入口の direct target にしなくても、必要なところだけ bounded run 内へ通せる」と確認できました。
+reviewer pass-through は、no-findings path では流れを止めず、blocking finding ではきちんと境界になることが確認できました。
+これにより、「reviewer を毎回人間入口の direct target にしなくても、必要なところだけ bounded run 内へ通せる」と分かりました。
 
 ## warning で分かったこと
 
@@ -152,17 +142,5 @@ status 同期漏れや table / frontmatter mismatch のような warning も tem
 
 つまり `conductor` は warning を見えるようにはするが、そこで何でも裁定する主体ではまだありません。  
 この限界も、実際の観測結果として確認できました。
-
-## いまの使い方を一言でまとめると
-
-現時点の `conductor` は、無制限 auto の agent ではありません。  
-docs を読み、段階的に flow を整え、人間へ「次に何をすればよいか」を見せる入口です。
-
-使い方としては次で十分です。
-
-- まず `[$conductor] LEVEL=MID step=5`
-- 強めに進めたいときだけ `LEVEL=HIGH step=20`
-- 後から要望を足したいときはキューを使う
-- hard stop が出たら「ここで人間へ返す境界だ」と読む
 
 次の中チャプターでは、ここまでで何が実用になり、何を residual として残したかを短く整理します。

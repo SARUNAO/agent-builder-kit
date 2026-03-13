@@ -38,6 +38,11 @@ AI コーディング前提の開発フローを初期化する `AGENTS.md` と 
 - `.agents/skills/`
 - 必要なら `docs/exec-plans/canvas/development-flow.canvas`
 
+## 既知の注意点
+- standalone な `agent-builder-kit` の素のコピーでは、`obsidian-canvas-sync` の no-arg 実行はまだ安定していません。現時点では `--plan-spec` / `--canvas` を明示する使い方を優先してください。
+- bootstrap 後は `.agents/skills/` の mirror / re-export と `tools/conductor/` の runtime asset が崩れていないかを一度確認してください。
+- `agent-builder-kit/` を source repo の内側に置いたまま検証すると、親 repo の `docs/` を拾って「動いているように見える」ことがあります。package 単体確認では、temp workspace か独立 copy で見るほうが安全です。
+
 ## Human Flow
 - やりたいことや違和感は、まず `plan-manager` に伝える
 - block に入る前の仕様詰めとおすすめ提示も `plan-manager` に任せる

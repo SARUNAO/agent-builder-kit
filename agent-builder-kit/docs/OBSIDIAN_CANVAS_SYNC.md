@@ -42,7 +42,6 @@
 - `docs/references/*.md` は残す場合も optional summary / hub として扱い、band の代替正本にはしない
 - generic 配布 package 自体には project-specific な reference note を同梱しなくてよい
 - bootstrap 後に summary note を残す場合は、本体 docs への従属関係を明示する
-- `TICKET-2026-03-11-025` 完了前は、実装が旧 `docs/references/*.md` 入力のままでも、契約上は移行途中として扱う
 
 ## block の扱い
 - block の正本は `plan-spec` の `High-level blocks` テーブルとする
@@ -175,9 +174,13 @@
 
 ## no-arg / explicit path の使い分け
 - current repo や package repo の通常運用では、引数なし実行を first choice にしてよい
+- ただし standalone な `agent-builder-kit` の素のコピーでは、no-arg 実行がまだ安定しない場合がある
+- その場合は `--plan-spec` / `--canvas` を明示する
 - temp fixture や別 repo copy を使う検証では、最低でも `--plan-spec` を明示する
 - その場合、`--chunk-dir` や `--ticket-dir` を省略しても、同じ fixture / repo root 配下の default path が補完される前提で読む
 - fixture の `--plan-spec` だけを渡して current workspace の `chunks/` や `tickets/` を暗黙に混ぜる動きは bug として扱う
+- `agent-builder-kit/` を source repo の内側に置いたまま検証すると、親 repo の `docs/` を拾って成功したように見えることがある
+- これは package 単体の仕様というより検証時の落とし穴なので、独立 copy や temp workspace で確認する
 
 ## reference band の更新責務
 - `docs/PRODUCT_SENSE.md`
@@ -201,7 +204,6 @@
 - role skill はまず本体 docs を更新する
 - optional summary / hub docs を残す場合だけ、同ターンで追従要否を判断する
 - `.canvas` 再同期は source docs 更新後に行う
-- `TICKET-2026-03-11-025` 完了前は script 実装が `docs/references/*.md` を読んでいても、contract drift ではなく移行途中として扱う
 
 ## ノード配置ルール
 

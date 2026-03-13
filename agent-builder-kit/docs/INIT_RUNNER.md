@@ -154,6 +154,7 @@ builder 自身の履歴を引き継ぐのは `self_hosting_pack` など明示条
 - `docs/exec-plans/completed/progress-log.md` が空 seed で始まること
 - `tools/codex-skills/` に `reviewer` を含む canonical role skill bundle が生成されること
 - `.agents/skills/` に同じ skill bundle が export され、利用者向け入口として読めること
+- `conductor` を同梱する場合、`tools/conductor/` の runtime asset も generated repo へ揃っていること
 - code ticket は `task-worker` 後に reviewer を呼び、docs-only ticket は skip 条件を明示して運用できること
 
 ## smoke test

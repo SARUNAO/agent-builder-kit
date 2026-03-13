@@ -1,4 +1,4 @@
-# bounded multi-step 以後の拡張
+# bounded multi-step と run level を加える
 
 ここから先で扱うのは、「`conductor` が実際にどこまで進められる入口になったか」です。  
 読者として先に見てほしいのは、内部実装の列挙ではなく、次の 4 点です。
@@ -50,13 +50,6 @@ active frontier 自体が close-ready で、`task-planner` に source docs sync 
 - `step=<num>`
   - 既定 `5` を上書きする bounded override
 
-たとえば日常運用なら次の 2 つを覚えておけば十分です。
-
-```text
-[$conductor] LEVEL=MID step=5
-[$conductor] LEVEL=HIGH step=20
-```
-
 ここでの `step=20` は「無制限にする」ではなく、「今回の block は実質最後まで進めたいので cap を大きめにする」という意味です。
 
 ## `HIGH` でも何でも自動で進むわけではない
@@ -78,12 +71,6 @@ active frontier 自体が close-ready で、`task-planner` に source docs sync 
 
 ここは使い勝手に直結する部分でした。
 自然文の完全自由入力より、`LEVEL=MID|HIGH step=<num>` の準正規形を強く求める方が安全です。
-
-そのため human 側にも、たとえば次のような形を使う前提に寄せました。
-
-```text
-[$conductor] LEVEL=HIGH step=20
-```
 
 skill 側はこれを `--level` と `--max-steps` に正規化して runtime へ渡します。
 この折衷のおかげで、使い方はシンプルに保ちつつ、解釈の揺れを減らせました。

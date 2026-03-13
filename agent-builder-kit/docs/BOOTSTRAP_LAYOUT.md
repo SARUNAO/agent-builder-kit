@@ -63,7 +63,7 @@ docs/
 - `docs/exec-plans/` 配下の execution artefact
 - `docs/references/` 配下の human-facing reference
 
-## 後続 ticket との関係
-- `TICKET-013` で `init_runner` の既定出力は `docs/exec-plans/` と `docs/references/` に追従済み
-- `TICKET-014` で source repo 上の planning artefact, reference tree, canvas path を新トポロジーへ物理移行する
-- `TICKET-015` で `agent-builder-kit/` は任意保持、`docs-builder.toml` は保持既定という cleanup 契約を確定した
+## 設計上の前提
+- `init_runner` の既定出力は `docs/exec-plans/` と `docs/references/` を基準にする
+- planning artefact, reference tree, canvas path はこのトポロジーに揃えて配置する
+- `agent-builder-kit/` は任意保持、`docs-builder.toml` は保持既定とする

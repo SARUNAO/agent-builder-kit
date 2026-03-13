@@ -1,4 +1,4 @@
-# 背景と全体像
+# なぜ conductor が必要だったのか
 
 この project の出発点は、「`agent-builder-kit` はすでに使えるが、実際に回すと毎回細かい判断が残る」という感触でした。
 plan を block、chunk、ticket に分けるところまでは整っていても、その先で人間が何度も「次は誰を呼ぶべきか」「追加要求をどこで差し込むべきか」「この結果を package や tutorial にどう戻すべきか」を考え直す場面が残っていたからです。
@@ -66,8 +66,6 @@ warning が出たときにもっと強く差し戻した方がよいのではな
 
 そのために、`docs/exec-plans/operator-requests/REQ-*.md` という request file を追加していきます。人間は template から request を作るだけでよく、`conductor` はそれを読んで「まず `task-planner` へ返す」「必要なら `plan-manager` へ上げる」と案内する設計です。
 
-日常運用では、Codex アプリの `設定 -> 環境 -> プロジェクト名横の + -> アクションを追加` から `bash` Action を登録し、UI 上部タブから `scripts/add_operator_request.sh` をワンボタンで叩けるようにしておくと使いやすくなります。loop 中に思いついた追加要求を、会話を中断せず queue へ積めるからです。
-
 この方式の利点は、すべてを docs 正本の世界に留められることです。
 メモリ上の一時イベントではなく、あとから見返せる記録として残るため、開発ログとしても扱いやすくなります。
 
@@ -92,23 +90,6 @@ warning が出たときにもっと強く差し戻した方がよいのではな
 
 つまり、current repo は開発現場の正本であり、tutorial repo は説明用の再編集物です。
 この線引きを先に決めておくことで、「とりあえず両方に同じことを書く」という非効率を避けやすくなります。
-
-## 公開更新のタイミング
-
-記録を 2 つの repo に分けると、次に迷いやすいのが「どのタイミングで何を commit し、いつ公開側へ流すのか」です。
-この project では、更新の単位を次のように分けています。
-
-- current repo
-  - ticket が終わるたびに planning docs や fact-report を更新する
-  - ただし commit の既定区切りは ticket ごとではなく、chunk close や checkpoint 単位に寄せる
-- tutorial repo
-  - current repo の記録を見ながら、章への編成は block close を基本に進める
-  - public な diff や publish は milestone 単位でまとめる
-
-package backport でも同じ考え方を使います。まず current repo で contract と validation を固め、そのうえで generic 差分だけを package へ戻し、package 単体 validation を通してから mirror や re-export を開く、という三段 gate にしています。
-
-つまり、internal な記録は細かく残し、public な説明はもう少し大きい節目でまとめる、という考え方です。
-この整理を先に入れておいたことで、あとから tutorial 本文を推敲するときも、internal な log をそのまま並べるのではなく、章ごとに必要な判断だけを拾いやすくなりました。
 
 ## このあと何を読むか
 
