@@ -82,6 +82,7 @@ class Config:
     chunks_dir: Path
     tickets_dir: Path
     fact_reports_dir: Path
+    operator_requests_dir: Path
 
 
 def parse_args() -> argparse.Namespace:
@@ -146,6 +147,7 @@ def load_config(args: argparse.Namespace) -> Config:
     chunks_dir = planning_root / "chunks"
     tickets_dir = planning_root / "tickets"
     fact_reports_dir = planning_root / "fact-reports"
+    operator_requests_dir = planning_root / "operator-requests"
 
     return Config(
         manifest_path=manifest_path,
@@ -191,6 +193,7 @@ def load_config(args: argparse.Namespace) -> Config:
         chunks_dir=chunks_dir,
         tickets_dir=tickets_dir,
         fact_reports_dir=fact_reports_dir,
+        operator_requests_dir=operator_requests_dir,
     )
 
 
@@ -399,6 +402,7 @@ def ensure_dirs(config: Config) -> None:
         config.chunks_dir,
         config.tickets_dir,
         config.fact_reports_dir,
+        config.operator_requests_dir,
     ]
     if config.profile in {"standard", "expanded"}:
         dirs.append(config.output_root / "docs" / "templates")
