@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import stat
 import shutil
 import subprocess
 import sys
@@ -492,8 +493,12 @@ def copy_runtime_assets(config: Config) -> list[str]:
         (CONDUCTOR_ROOT, config.output_root / "tools" / "conductor"),
     ]
     for src, dst in runtime_trees:
-        if src.exists() and copy_tree(src, dst, config.overwrite):
-            copied.append(str(dst))
+        if src.exists():
+            copied_tree = copy_tree(src, dst, config.overwrite)
+            if dst.exists():
+                ensure_runtime_executables(dst)
+            if copied_tree:
+                copied.append(str(dst))
     return copied
 
 
@@ -648,6 +653,19 @@ def copy_tree(src: Path, dst: Path, overwrite: bool) -> bool:
         shutil.rmtree(dst)
     shutil.copytree(src, dst, ignore=COPYTREE_IGNORE)
     return True
+
+
+def ensure_runtime_executables(runtime_root: Path) -> None:
+    executable_relpaths = [
+        Path("run_conductor.sh"),
+        Path("add_operator_request.sh"),
+    ]
+    for relpath in executable_relpaths:
+        path = runtime_root / relpath
+        if not path.is_file():
+            continue
+        current_mode = path.stat().st_mode
+        path.chmod(current_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 
 def render_agents(config: Config) -> str:
