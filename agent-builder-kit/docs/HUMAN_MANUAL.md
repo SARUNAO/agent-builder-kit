@@ -44,12 +44,6 @@ kind: reference_source
 3. `INIT_RUNNER.md` の bootstrap / export 手順どおりに generated repo へ反映されるか確認する
 4. generated repo では `.agents/skills/` の mirror と runtime asset の配置が崩れていないかを見る
 
-## package 単体利用時の既知の注意点
-- standalone な `agent-builder-kit` の素のコピーでは、`obsidian-canvas-sync` の no-arg 実行はまだ安定していない
-- その場合は `--plan-spec` / `--canvas` を明示して使う
-- `agent-builder-kit/` を source repo の内側に置いたまま検証すると、親 repo の `docs/` を拾って見かけ上動くことがある
-- package 単体の確認は temp workspace か独立 copy で行う
-
 ## `conductor` を package 単体で使うときの読み方
 - `conductor` は same-block bounded multi-step を正として使う
 - 既定値は `LEVEL=MID step=5`

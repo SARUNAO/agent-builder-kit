@@ -222,21 +222,30 @@ reviewer 分離は contract 定義、asset 実装、bootstrap 反映まで閉じ
 - role skill の正本は `docs/exec-plans/` と `docs/references/` を使う
 - legacy layout を読む必要がある場合は、manifest override を前提に明示的に扱う
 - `docs/references/*.md` は optional summary / hub / 補助 guide であり、本体 docs や direct-source band を置き換えない
+- reference band の自動同期責務は、`TICKET-017` の判断により support skill `docs-sync` へ分離してよいものとして扱う
 
-## 現在の決定事項
+## `TICKET-017` 時点の決定
 - `docs-sync` は support skill として分離してよい
 - ただし generic package の共通骨格には含めず、将来実装する場合のみ `obsidian_canvas pack` の add-on asset として扱う
 - それまでの暫定運用では、role skill が reference / hub 更新を同ターンで担う
+
+## `TICKET-025` 時点の決定
 - `task-worker` とは別に code review 専用 canonical 名 `reviewer` を定義する
 - generated repo と package には `reviewer` だけを配り、旧 alias は同梱しない
 - コード編集あり ticket では `task-worker` 後段で reviewer を呼ぶ
 - markdown / docs 主体 ticket は docs-only skip を明示したうえで reviewer を省略できる
+
+## `TICKET-028` 時点の決定
 - `tools/codex-skills/` を canonical source として維持する
 - `.agents/skills/` は利用者向け export 層として定義する
 - generated repo で `.agents/skills/` が存在する場合は入口をそちらへ寄せてよい
 - ただし source repo / package docs / bootstrap contract の正本は引き続き `tools/codex-skills/` に置く
+
+## `TICKET-037` 時点の決定
 - `conductor` の runtime asset は package 側 `tools/conductor/` に同梱する
 - package docs では `conductor` の責務と runtime asset の呼び方を先に説明し、skill 本文の配布は generated repo への導線と合わせて段階導入してよい
+
+## `TICKET-022` 時点の決定
 - reference band は `direct-source` を正契約とし、summary note は optional な従属 docs として扱う
 - generated attention queue は docs 正本を前提にし、`AI案内可 / 条件付き / 人間判断必須` の境界を静的 seed へ反映する
 - `人間判断必須` は human review trigger としてだけ queue に載せ、解決策を role skill が先回りして固定しない

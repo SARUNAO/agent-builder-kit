@@ -25,6 +25,7 @@ PLANNING_TEMPLATES = BUILDER_DOCS / "templates"
 WORKFLOW_REFERENCES = BUILDER_DOCS / "references"
 SKILLS_ROOT = ROOT / "tools" / "codex-skills"
 CONDUCTOR_ROOT = ROOT / "tools" / "conductor"
+COPYTREE_IGNORE = shutil.ignore_patterns("__pycache__", "*.pyc")
 
 DEFAULT_REFERENCE_SEED = ["product_sense", "design", "attention_queue", "human_manual"]
 REFERENCE_SEED_MAP = {
@@ -342,6 +343,13 @@ def main() -> int:
     generated.extend(generate_runtime_seed(config))
     if config.canvas_enabled:
         generated.extend(generate_canvas(config))
+    cleanup_bytecode_artifacts(
+        [
+            config.output_root / "tools",
+            config.output_root / ".agents",
+            ROOT / "tools",
+        ]
+    )
     cleanup_result = cleanup_source_package(args, config)
 
     print(
@@ -382,7 +390,6 @@ def ensure_dirs(config: Config) -> None:
         config.output_root / "docs",
         config.output_root / "docs" / "references",
         config.output_root / "tools",
-        config.output_root / "tools" / "conductor",
         config.output_root / "tools" / "codex-skills",
         config.planning_root,
         config.active_dir,
@@ -596,6 +603,18 @@ def generate_canvas(config: Config) -> list[str]:
     return [str(config.canvas_path)]
 
 
+def cleanup_bytecode_artifacts(roots: list[Path]) -> None:
+    for root in roots:
+        if not root.exists():
+            continue
+        for cache_dir in list(root.rglob("__pycache__")):
+            if cache_dir.is_dir():
+                shutil.rmtree(cache_dir, ignore_errors=True)
+        for bytecode in list(root.rglob("*.pyc")):
+            if bytecode.is_file():
+                bytecode.unlink(missing_ok=True)
+
+
 def write_text(
     path: Path,
     content: str,
@@ -627,7 +646,7 @@ def copy_tree(src: Path, dst: Path, overwrite: bool) -> bool:
         if not overwrite:
             return False
         shutil.rmtree(dst)
-    shutil.copytree(src, dst)
+    shutil.copytree(src, dst, ignore=COPYTREE_IGNORE)
     return True
 
 

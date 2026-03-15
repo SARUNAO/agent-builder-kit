@@ -1824,7 +1824,7 @@ def build_scaffold_response(args: ConductorArgs) -> dict[str, object]:
     return {
         "status": "ok",
         "mode": "scaffold",
-        "message": "runtime state parsing は未実装です。次の実装ステップで追加してください。",
+        "message": "runtime state parsing は未実装です。TICKET-007 で追加します。",
         "paths": {
             "plan_spec": path_payload(args.plan_spec),
             "block_dir": path_payload(args.block_dir),
@@ -1832,7 +1832,7 @@ def build_scaffold_response(args: ConductorArgs) -> dict[str, object]:
             "ticket_dir": path_payload(args.ticket_dir),
             "operator_request_dir": path_payload(args.operator_request_dir),
         },
-        "next_ticket": None,
+        "next_ticket": "TICKET-007",
         "route_hint": "task_worker",
         "args": {key: str(value) for key, value in asdict(args).items()},
     }
