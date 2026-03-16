@@ -1327,20 +1327,42 @@ def infer_route_hint(
     return "plan_manager"
 
 
+def resolve_pending_request_next_role(
+    pending_requests: list[OperatorRequestState],
+) -> tuple[str, list[str]]:
+    requested_roles = sorted_values([item.requested_role for item in pending_requests])
+    unique_roles = sorted(set(requested_roles))
+    if len(unique_roles) == 1:
+        return unique_roles[0], unique_roles
+    return "task_planner", unique_roles
+
+
 def build_stop_reason(
     pending_requests: list[OperatorRequestState],
     bundled_confirmation_stop_reason: dict[str, object] | None,
     loop_stop_reason: dict[str, object] | None,
 ) -> dict[str, object] | None:
     if pending_requests:
+        next_role, requested_roles = resolve_pending_request_next_role(pending_requests)
+        if len(requested_roles) == 1:
+            message = (
+                "pending operator request があるため、自動続行せず "
+                f"{next_role.replace('_', '-')} へ戻します。"
+            )
+        else:
+            message = (
+                "pending operator request の requested_role が混在しているため、"
+                "自動続行せず task-planner へ戻します。"
+            )
         return {
             "code": "pending_operator_request",
-            "message": "pending operator request があるため、自動続行せず task-planner へ戻します。",
-            "next_role": "task_planner",
+            "message": message,
+            "next_role": next_role,
             "request_ids": [item.request_id for item in pending_requests],
             "evidence": {
                 "pending_count": len(pending_requests),
                 "request_ids": [item.request_id for item in pending_requests],
+                "requested_roles": requested_roles,
             },
         }
     if bundled_confirmation_stop_reason is not None:
@@ -1457,17 +1479,28 @@ def build_bounded_multi_step_state(
     }
 
 
+def derive_canvas_sync_paths(args: ConductorArgs) -> tuple[Path, Path, Path]:
+    planning_root = args.plan_spec.parent
+    docs_root = planning_root.parent
+    reference_dir = docs_root / "references"
+    canvas_path = planning_root / "canvas" / "development-flow.canvas"
+    return DEFAULT_CANVAS_SYNC_SCRIPT, canvas_path, reference_dir
+
+
 def build_limited_actions(
+    args: ConductorArgs,
     stop_reason: dict[str, object] | None,
     advisories: list[dict[str, str]],
 ) -> dict[str, dict[str, object]]:
+    canvas_sync_script, canvas_path, reference_dir = derive_canvas_sync_paths(args)
     canvas_sync_available = (
-        DEFAULT_CANVAS_SYNC_SCRIPT.exists()
-        and DEFAULT_CANVAS.exists()
-        and DEFAULT_PLAN_SPEC.exists()
-        and DEFAULT_BLOCK_DIR.exists()
-        and DEFAULT_CHUNK_DIR.exists()
-        and DEFAULT_TICKET_DIR.exists()
+        canvas_sync_script.exists()
+        and canvas_path.exists()
+        and args.plan_spec.exists()
+        and args.block_dir.exists()
+        and args.chunk_dir.exists()
+        and args.ticket_dir.exists()
+        and reference_dir.exists()
     )
     canvas_sync_recommended = canvas_sync_available and stop_reason is None and bool(advisories)
     canvas_reason = "source docs を更新した role の sync を置き換えず、補助導線としてだけ使う。"
@@ -1492,9 +1525,9 @@ def build_limited_actions(
             "recommended": canvas_sync_recommended,
             "requires_explicit_opt_in": True,
             "reason": canvas_reason,
-            "script_path": str(DEFAULT_CANVAS_SYNC_SCRIPT),
-            "canvas_path": str(DEFAULT_CANVAS),
-            "reference_dir": str(DEFAULT_REFERENCE_DIR),
+            "script_path": str(canvas_sync_script),
+            "canvas_path": str(canvas_path),
+            "reference_dir": str(reference_dir),
         },
     }
 
@@ -1767,7 +1800,7 @@ def build_runtime_response(args: ConductorArgs) -> dict[str, object]:
         args,
         high_cross_block_handoff,
     )
-    limited_actions = build_limited_actions(stop_reason, advisories)
+    limited_actions = build_limited_actions(args, stop_reason, advisories)
     dispatchable = infer_dispatchable(route_hint, stop_reason)
     return {
         "status": "ok",

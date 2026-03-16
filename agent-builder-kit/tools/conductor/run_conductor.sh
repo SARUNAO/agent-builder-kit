@@ -10,6 +10,11 @@ fi
 CONDUCTOR_SCRIPT="$SCRIPT_DIR/flow_conductor.py"
 CANVAS_SYNC_SCRIPT="$REPO_ROOT/tools/codex-skills/obsidian-canvas-sync/scripts/sync_canvas.py"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
+PLAN_SPEC_PATH="$REPO_ROOT/docs/exec-plans/plan-spec.md"
+BLOCK_DIR_PATH="$REPO_ROOT/docs/exec-plans/blocks"
+CHUNK_DIR_PATH="$REPO_ROOT/docs/exec-plans/chunks"
+TICKET_DIR_PATH="$REPO_ROOT/docs/exec-plans/tickets"
+OPERATOR_REQUEST_DIR_PATH="$REPO_ROOT/docs/exec-plans/operator-requests"
 
 usage() {
   cat <<'EOF'
@@ -58,7 +63,26 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --plan-spec|--block-dir|--chunk-dir|--ticket-dir|--operator-request-dir|--runtime-state-dir|--level|--max-steps)
-      CONDUCTOR_ARGS+=("$1" "${2:?missing value for $1}")
+      option="$1"
+      value="${2:?missing value for $1}"
+      case "$option" in
+        --plan-spec)
+          PLAN_SPEC_PATH="$value"
+          ;;
+        --block-dir)
+          BLOCK_DIR_PATH="$value"
+          ;;
+        --chunk-dir)
+          CHUNK_DIR_PATH="$value"
+          ;;
+        --ticket-dir)
+          TICKET_DIR_PATH="$value"
+          ;;
+        --operator-request-dir)
+          OPERATOR_REQUEST_DIR_PATH="$value"
+          ;;
+      esac
+      CONDUCTOR_ARGS+=("$option" "$value")
       shift 2
       ;;
     -h|--help)
@@ -115,7 +139,11 @@ def display_role(value: str) -> str:
     return value.replace("_", "-")
 
 if code == "pending_operator_request":
-    print("pending operator request があるため、自動続行せず task-planner へ戻してください。")
+    next_role = display_role(stop_reason.get("next_role", "task_planner"))
+    print(
+        "pending operator request があるため、自動続行せず "
+        f"{next_role} へ戻してください。"
+    )
 elif code == "bundled_confirmations_detected":
     evidence = stop_reason.get("evidence") or {}
     bundle = evidence.get("bundle", "?")
@@ -202,6 +230,11 @@ if [[ "$HUMAN" -eq 1 && -n "$wrapper_note" ]]; then
   echo "wrapper_note=$wrapper_note" >&2
 fi
 
+PLANNING_ROOT="$(dirname "$PLAN_SPEC_PATH")"
+DOCS_ROOT="$(dirname "$PLANNING_ROOT")"
+REFERENCE_DIR_PATH="$DOCS_ROOT/references"
+CANVAS_PATH="$PLANNING_ROOT/canvas/development-flow.canvas"
+
 if [[ "$SYNC_CANVAS" -eq 1 ]]; then
   if [[ -n "$stop_reason_code" ]]; then
     if [[ "$HUMAN" -eq 1 ]]; then
@@ -212,12 +245,12 @@ if [[ "$SYNC_CANVAS" -eq 1 ]]; then
     exit 1
   else
     "$PYTHON_BIN" "$CANVAS_SYNC_SCRIPT" \
-      --plan-spec "$REPO_ROOT/docs/exec-plans/plan-spec.md" \
-      --block-dir "$REPO_ROOT/docs/exec-plans/blocks" \
-      --chunk-dir "$REPO_ROOT/docs/exec-plans/chunks" \
-      --ticket-dir "$REPO_ROOT/docs/exec-plans/tickets" \
-      --reference-dir "$REPO_ROOT/docs/references" \
-      --canvas "$REPO_ROOT/docs/exec-plans/canvas/development-flow.canvas" \
+      --plan-spec "$PLAN_SPEC_PATH" \
+      --block-dir "$BLOCK_DIR_PATH" \
+      --chunk-dir "$CHUNK_DIR_PATH" \
+      --ticket-dir "$TICKET_DIR_PATH" \
+      --reference-dir "$REFERENCE_DIR_PATH" \
+      --canvas "$CANVAS_PATH" \
       --vault-root "$REPO_ROOT" >&2
     if [[ "$HUMAN" -eq 1 ]]; then
       echo "wrapper_note=補助 .canvas sync を実行しました。source docs の正本性は各 role 側に残ります。" >&2
